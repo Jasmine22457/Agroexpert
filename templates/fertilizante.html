@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Fertilizantes</title>
+</head>
+<body>
+    <h2>Recomendador de Fertilizantes</h2>
+    <form method="post">
+        <label>Cultivo:
+            <select name="cultivo" required>
+                {% for c in cultivos %}
+                <option value="{{c}}">{{c|capitalize}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Suelo:
+            <select name="suelo" required>
+                {% for s in suelos %}
+                <option value="{{s}}">{{s|capitalize}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <label>Clima:
+            <select name="clima" required>
+                {% for clima in climas %}
+                <option value="{{clima}}">{{clima|capitalize}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <button type="submit">Recomendar</button>
+    </form>
+    {% if resultado %}
+        <div><strong>Recomendación:</strong> {{ resultado }}</div>
+    {% endif %}
+    <a href="/home">Volver</a>
+</body>
+</html>

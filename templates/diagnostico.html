@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diagnóstico</title>
+</head>
+<body>
+    <h2>Diagnóstico de Plagas o Enfermedades</h2>
+    <form method="post">
+        <label>Cultivo:
+            <select name="cultivo" required>
+                {% for c in cultivos %}
+                <option value="{{c}}">{{c|capitalize}}</option>
+                {% endfor %}
+            </select>
+        </label>
+        <br>
+        <span>Síntomas (selecciona los presentes):</span><br>
+        {% for s in sintomas_lista %}
+            <label><input type="checkbox" name="sintomas" value="{{s}}" {% if s in sintomas %}checked{% endif %}> {{s|capitalize}}</label>
+            {% if loop.index % 4 == 0 %}<br>{% endif %}
+        {% endfor %}
+        <br>
+        <button type="submit">Diagnosticar</button>
+    </form>
+    {% if resultado %}
+        <div><strong>Diagnóstico:</strong> {{ resultado }}</div>
+    {% endif %}
+    <a href="/home">Volver</a>
+</body>
+</html>
