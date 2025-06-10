@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for
 from models.models import crear_usuario, verificar_usuario, guardar_consulta
-from motor_inferencia.motor_inferencia import recomendar_fertilizante, diagnosticar_plaga, recomendar_acuaponia
-from base_conocimiento.base_conocimiento import CULTIVOS, SUELOS, CLIMAS, PECES, CULTIVOS_ACUA, SINTOMAS
+from motor_inferencia.motor_inferencia import AsesorAgricola
+
+asesor = AsesorAgricola()
 
 main_blueprint = Blueprint('main', __name__)
 
@@ -43,34 +44,79 @@ def home():
 @main_blueprint.route('/fertilizante', methods=['GET', 'POST'])
 def fertilizante():
     resultado = None
+    advertencias = []
+    sugerencias = []
+    cultivos = asesor.obtener_opciones('cultivos')
+    suelos = asesor.obtener_opciones('suelos')
+    climas = asesor.obtener_opciones('climas')
+    etapas = asesor.obtener_opciones('etapas')
+    variedades_dict = asesor.obtener_opciones('variedades_cultivo')
+    variedades = []
+
     if request.method == 'POST':
         cultivo = request.form['cultivo']
         suelo = request.form['suelo']
         clima = request.form['clima']
-        resultado = recomendar_fertilizante(cultivo, suelo, clima)
+        etapa = request.form.get('etapa')  # Puede ser None
+        variedad = request.form.get('variedad')  # Puede ser None
+        variedades = variedades_dict.get(cultivo, [])
+
+        response = asesor.recomendar_fertilizacion(
+            cultivo, suelo, clima, variedad, etapa
+        )
+        if 'recomendaciones' in response:
+            resultado = response['recomendaciones']
+            advertencias = response.get('advertencias', [])
+        else:
+            resultado = None
+            sugerencias = response.get('sugerencias', [])
+
         if 'usuario_id' in session:
-            guardar_consulta(session['usuario_id'], 'fertilizante', str(request.form), resultado)
-    return render_template('fertilizante.html', resultado=resultado, cultivos=CULTIVOS, suelos=SUELOS, climas=CLIMAS)
+            guardar_consulta(session['usuario_id'], 'fertilizante', str(request.form), str(response))
+
+    if request.method == 'GET':
+        cultivo = request.args.get('cultivo', None)
+        if cultivo:
+            variedades = variedades_dict.get(cultivo, [])
+
+    return render_template(
+        'fertilizante.html',
+        resultado=resultado,
+        advertencias=advertencias,
+        sugerencias=sugerencias,
+        cultivos=cultivos,
+        suelos=suelos,
+        climas=climas,
+        etapas=etapas,
+        variedades=variedades
+    )
 
 @main_blueprint.route('/diagnostico', methods=['GET', 'POST'])
 def diagnostico():
-    resultado = None
-    sintomas = []
+    sugerencias = []
+    quimicos = []
+    cultivos = asesor.obtener_opciones('cultivos')
+    sintomas_lista = asesor.obtener_opciones('sintomas')
+    diagnosticos = []
+
     if request.method == 'POST':
         cultivo = request.form['cultivo']
         sintomas = request.form.getlist('sintomas')
-        resultado = diagnosticar_plaga(cultivo, sintomas)
+        response = asesor.diagnosticar_plaga(cultivo, sintomas)
+        if 'diagnosticos' in response:
+            diagnosticos = response['diagnosticos']
+            quimicos = response.get('quimicos_recomendados', [])
+        else:
+            sugerencias = response.get('sugerencias', [])
         if 'usuario_id' in session:
-            guardar_consulta(session['usuario_id'], 'diagnostico', str(request.form), resultado)
-    return render_template('diagnostico.html', resultado=resultado, cultivos=CULTIVOS, sintomas_lista=SINTOMAS, sintomas=sintomas)
+            guardar_consulta(session['usuario_id'], 'diagnostico', str(request.form), str(response))
 
-@main_blueprint.route('/acuaponia', methods=['GET', 'POST'])
-def acuaponia():
-    resultado = None
-    if request.method == 'POST':
-        pez = request.form['pez']
-        cultivo = request.form['cultivo']
-        resultado = recomendar_acuaponia(pez, cultivo)
-        if 'usuario_id' in session:
-            guardar_consulta(session['usuario_id'], 'acuaponia', str(request.form), resultado)
-    return render_template('acuaponia.html', resultado=resultado, peces=PECES, cultivos=CULTIVOS_ACUA)
+    return render_template(
+        'diagnostico.html',
+        diagnosticos=diagnosticos,
+        sugerencias=sugerencias,
+        quimicos=quimicos,
+        cultivos=cultivos,
+        sintomas_lista=sintomas_lista
+    )
+
