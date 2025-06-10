@@ -1,691 +1,192 @@
-# -*- coding: utf-8 -*-
-"""
-BASE DE CONOCIMIENTO PARA AGRICULTURA EN EL SALVADOR
-Datos técnicos validados por INSAFO y literatura técnica Mesoamericana.
-Última actualización: Julio 2023
-"""
+# base_conocimiento.py
 
-# === FERTILIZANTES QUÍMICOS PARA GRANOS BÁSICOS Y HORTALIZAS ===
+# --- REGLAS DE FERTILIZANTE: grano básico y hortalizas principales ---
 FERTILIZANTES = [
-    # === MAÍZ ===
-    {
-        'cultivo': 'maiz',
-        'variedad': 'híbrido',
-        'suelo': 'arcilloso',
-        'clima': 'tropical',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '18-46-0 + Zn (DAP con Zinc)',
-            'dosis': '3 qq/manzana',
-            'aplicacion': 'Aplicar al momento de la siembra, incorporar al suelo',
-            'fabricantes': ['Yara', 'Profertil'],
-            'precauciones': 'No mezclar con semilla directamente'
-        }
-    },
-    {
-        'cultivo': 'maiz',
-        'variedad': 'criollo',
-        'suelo': 'arenoso',
-        'clima': 'seco',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '12-30-10 + micronutrientes',
-            'dosis': '2.5 qq/manzana',
-            'aplicacion': 'Incorporar 5 cm debajo de la semilla',
-            'fabricantes': ['Fertica'],
-            'precauciones': 'Requiere riego inmediato post-aplicación'
-        }
-    },
-    {
-        'cultivo': 'maiz',
-        'variedad': 'híbrido',
-        'suelo': 'arcilloso',
-        'clima': 'tropical',
-        'etapa': 'desarrollo',
-        'recomendacion': {
-            'formula': '46-0-0 (Urea)',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar a los 25-30 días después de siembra, en banda',
-            'fabricantes': ['Fertica', 'Yara'],
-            'precauciones': 'Evitar aplicación en horas calurosas'
-        }
-    },
-    # === FRIJOL ===
-    {
-        'cultivo': 'frijol',
-        'variedad': 'rojo de seda',
-        'suelo': 'volcánico',
-        'clima': 'húmedo',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '10-30-10',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar en banda a 5 cm de profundidad',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'No aplicar en contacto directo con semilla'
-        }
-    },
-    {
-        'cultivo': 'frijol',
-        'variedad': 'negro',
-        'suelo': 'arenoso',
-        'clima': 'seco',
-        'etapa': 'floración',
-        'recomendacion': {
-            'formula': '15-5-30 + 2MgO',
-            'dosis': '1.5 qq/manzana',
-            'aplicacion': 'Aplicación foliar en horas tempranas',
-            'fabricantes': ['Yara'],
-            'precauciones': 'Suspender si lluvia pronosticada en 24h'
-        }
-    },
-    # === SORGO ===
-    {
-        'cultivo': 'sorgo',
-        'variedad': 'granífero',
-        'suelo': 'arcilloso',
-        'clima': 'seco',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '80-60-00 + Zn (mezcla física)',
-            'dosis': '3 qq/manzana',
-            'aplicacion': 'Incorporar pre-siembra con rastra',
-            'fabricantes': ['Fertica'],
-            'precauciones': 'Requiere análisis de suelo previo'
-        }
-    },
-    # === ARROZ ===
-    {
-        'cultivo': 'arroz',
-        'variedad': 'IR-8',
-        'suelo': 'franco',
-        'clima': 'húmedo',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '15-15-15',
-            'dosis': '2.5 qq/manzana',
-            'aplicacion': 'Aplicar al voleo antes de la inundación',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'No aplicar si suelo saturado'
-        }
-    },
-    # === CAÑA DE AZÚCAR ===
-    {
-        'cultivo': 'caña',
-        'variedad': 'CP 72-2086',
-        'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'desarrollo',
-        'recomendacion': {
-            'formula': '25-5-15 + 4S + 1Zn',
-            'dosis': '4 qq/manzana',
-            'aplicacion': 'Aplicación en banda a 30 cm de planta',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'No aplicar con vientos >15 km/h'
-        }
-    },
-    # === TOMATE ===
-    {
-        'cultivo': 'tomate',
-        'variedad': 'híbrido',
-        'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'trasplante',
-        'recomendacion': {
-            'formula': '15-15-15 + Ca + Mg',
-            'dosis': '250 lb/manzana',
-            'aplicacion': 'Incorporar en hoyo de trasplante',
-            'fabricantes': ['Yara'],
-            'precauciones': 'Evitar contacto directo con raíces'
-        }
-    },
-    {
-        'cultivo': 'tomate',
-        'variedad': 'híbrido',
-        'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'floración',
-        'recomendacion': {
-            'formula': '12-6-24 + 2MgO + micronutrientes',
-            'dosis': '3 aplicaciones foliares de 10 lb/manzana',
-            'aplicacion': 'Pulverización foliar cada 15 días',
-            'fabricantes': ['Haifa'],
-            'precauciones': 'Aplicar solo con humedad relativa >60%'
-        }
-    },
-    # === CHILE ===
-    {
-        'cultivo': 'chile',
-        'variedad': 'jalapeño',
-        'suelo': 'arenoso',
-        'clima': 'seco',
-        'etapa': 'producción',
-        'recomendacion': {
-            'formula': '13-5-30 + Ca + B',
-            'dosis': '20 lb/manzana por riego fertirrigado',
-            'aplicacion': 'Aplicar cada 15 días vía riego por goteo',
-            'fabricantes': ['ICL'],
-            'precauciones': 'Regular pH del agua a 5.8-6.2'
-        }
-    },
-    # === CEBOLLA ===
-    {
-        'cultivo': 'cebolla',
-        'variedad': 'amarilla',
-        'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '12-24-12 + Mg',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar al voleo y mezclar en la cama',
-            'fabricantes': ['Fertica'],
-            'precauciones': 'Evitar excesos para no inhibir germinación'
-        }
-    },
-    # === LECHUGA ===
-    {
-        'cultivo': 'lechuga',
-        'variedad': 'crispada',
-        'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'trasplante',
-        'recomendacion': {
-            'formula': '15-15-15 + Ca',
-            'dosis': '150 lb/manzana',
-            'aplicacion': 'En hoyo al trasplantar, mezclado con tierra',
-            'fabricantes': ['ICL'],
-            'precauciones': 'No sobredosificar, puede quemar raíces'
-        }
-    },
-    # === ZANAHORIA ===
-    {
-        'cultivo': 'zanahoria',
-        'variedad': 'nantesa',
-        'suelo': 'limo',
-        'clima': 'templado',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '12-30-10',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar e incorporar antes de la siembra',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Realizar análisis de suelo previo'
-        }
-    },
-    # === ESPINACA ===
-    {
-        'cultivo': 'espinaca',
-        'variedad': 'viroflay',
-        'suelo': 'franco',
-        'clima': 'templado',
-        'etapa': 'trasplante',
-        'recomendacion': {
-            'formula': '10-20-20 + B',
-            'dosis': '1.5 qq/manzana',
-            'aplicacion': 'Aplicar al trasplante, cubrir con tierra',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Mantener humedad sin encharcamiento'
-        }
-    },
-    # === REPOLLO ===
-    {
-        'cultivo': 'repollo',
-        'variedad': 'corazón de buey',
-        'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'trasplante',
-        'recomendacion': {
-            'formula': '15-15-15 + Mg',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Mezclar en la cama de trasplante',
-            'fabricantes': ['ICL'],
-            'precauciones': 'Mantener riego moderado'
-        }
-    },
-    # === AYOTE ===
-    {
-        'cultivo': 'ayote',
-        'variedad': 'criollo',
-        'suelo': 'arenoso',
-        'clima': 'tropical',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '12-24-12 + B',
-            'dosis': '1 qq/manzana',
-            'aplicacion': 'Al voleo previo a la siembra',
-            'fabricantes': ['Fertica'],
-            'precauciones': 'No aplicar en exceso'
-        }
-    },
-    # === GUISQUIL ===
-    {
-        'cultivo': 'guisquil',
-        'variedad': 'verde',
-        'suelo': 'volcánico',
-        'clima': 'húmedo',
-        'etapa': 'desarrollo',
-        'recomendacion': {
-            'formula': '10-30-10',
-            'dosis': '1 qq/manzana',
-            'aplicacion': 'Aplicar a pie de planta cada 60 días',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Evitar contacto directo con tallo'
-        }
-    },
-    # === PIPIAN ===
-    {
-        'cultivo': 'pipian',
-        'variedad': 'criollo',
-        'suelo': 'arcilloso',
-        'clima': 'húmedo',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '10-30-10 + B',
-            'dosis': '1.5 qq/manzana',
-            'aplicacion': 'Incorporar antes de siembra',
-            'fabricantes': ['Fertica'],
-            'precauciones': 'Regar inmediatamente tras aplicación'
-        }
-    },
-    # === RABANO ===
-    {
-        'cultivo': 'rabano',
-        'variedad': 'criollo',
-        'suelo': 'franco',
-        'clima': 'templado',
-        'etapa': 'siembra',
-        'recomendacion': {
-            'formula': '10-20-20',
-            'dosis': '1 qq/manzana',
-            'aplicacion': 'Incorporar superficialmente antes de siembra',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Evitar exceso de agua en primeras semanas'
-        }
-    }
+    # MAÍZ
+    {'cultivo': 'maiz', 'suelo': 'arcilloso', 'clima': 'seco',     'recomendacion': "120 kg N/ha, 60 kg P₂O₅/ha, 40 kg K₂O/ha. Mejorar drenaje y riego frecuente."},
+    {'cultivo': 'maiz', 'suelo': 'arcilloso', 'clima': 'humedo',   'recomendacion': "120 kg N/ha, 60 kg P₂O₅/ha, 40 kg K₂O/ha. Aplicar fungicida preventivo."},
+    {'cultivo': 'maiz', 'suelo': 'arcilloso', 'clima': 'tropical', 'recomendacion': "110 kg N/ha, 60 kg P₂O₅/ha, 40 kg K₂O/ha. Vigilar malezas."},
+    {'cultivo': 'maiz', 'suelo': 'arenoso',   'clima': 'seco',     'recomendacion': "150 kg N/ha, 60 kg P₂O₅/ha, 60 kg K₂O/ha. Riego frecuente y materia orgánica."},
+    {'cultivo': 'maiz', 'suelo': 'arenoso',   'clima': 'humedo',   'recomendacion': "150 kg N/ha, 60 kg P₂O₅/ha, 60 kg K₂O/ha. Buen drenaje."},
+    {'cultivo': 'maiz', 'suelo': 'arenoso',   'clima': 'tropical', 'recomendacion': "130 kg N/ha, 60 kg P₂O₅/ha, 55 kg K₂O/ha."},
+    {'cultivo': 'maiz', 'suelo': 'volcanico', 'clima': 'seco',     'recomendacion': "100 kg N/ha, 45 kg P₂O₅/ha, 35 kg K₂O/ha. Vigilar pH."},
+    {'cultivo': 'maiz', 'suelo': 'volcanico', 'clima': 'humedo',   'recomendacion': "105 kg N/ha, 50 kg P₂O₅/ha, 40 kg K₂O/ha."},
+    {'cultivo': 'maiz', 'suelo': 'volcanico', 'clima': 'tropical', 'recomendacion': "100 kg N/ha, 48 kg P₂O₅/ha, 38 kg K₂O/ha."},
+
+    # FRIJOL
+    {'cultivo': 'frijol', 'suelo': 'arcilloso', 'clima': 'seco',   'recomendacion': "60 kg N/ha, 70 kg P₂O₅/ha, 30 kg K₂O/ha. Mejorar ventilación."},
+    {'cultivo': 'frijol', 'suelo': 'arcilloso', 'clima': 'humedo', 'recomendacion': "70 kg N/ha, 80 kg P₂O₅/ha, 40 kg K₂O/ha."},
+    {'cultivo': 'frijol', 'suelo': 'arenoso',   'clima': 'seco',   'recomendacion': "80 kg N/ha, 80 kg P₂O₅/ha, 50 kg K₂O/ha. Abono orgánico."},
+    {'cultivo': 'frijol', 'suelo': 'arenoso',   'clima': 'humedo', 'recomendacion': "90 kg N/ha, 90 kg P₂O₅/ha, 50 kg K₂O/ha."},
+    {'cultivo': 'frijol', 'suelo': 'volcanico', 'clima': 'seco',   'recomendacion': "70 kg N/ha, 60 kg P₂O₅/ha, 30 kg K₂O/ha. Vigilar pH."},
+    {'cultivo': 'frijol', 'suelo': 'volcanico', 'clima': 'humedo', 'recomendacion': "75 kg N/ha, 65 kg P₂O₅/ha, 32 kg K₂O/ha."},
+
+    # ARROZ
+    {'cultivo': 'arroz', 'suelo': 'franco',    'clima': 'humedo',   'recomendacion': "90 kg N/ha, 50 kg P₂O₅/ha, 50 kg K₂O/ha. Mantener riego por inundación."},
+    {'cultivo': 'arroz', 'suelo': 'franco',    'clima': 'tropical', 'recomendacion': "95 kg N/ha, 55 kg P₂O₅/ha, 48 kg K₂O/ha."},
+    {'cultivo': 'arroz', 'suelo': 'arcilloso', 'clima': 'humedo',   'recomendacion': "80 kg N/ha, 40 kg P₂O₅/ha, 40 kg K₂O/ha."},
+    {'cultivo': 'arroz', 'suelo': 'arcilloso', 'clima': 'tropical', 'recomendacion': "85 kg N/ha, 43 kg P₂O₅/ha, 43 kg K₂O/ha."},
+
+    # SORGO
+    {'cultivo': 'sorgo', 'suelo': 'arcilloso', 'clima': 'seco',   'recomendacion': "75 kg N/ha, 35 kg P₂O₅/ha, 28 kg K₂O/ha."},
+    {'cultivo': 'sorgo', 'suelo': 'arcilloso', 'clima': 'humedo', 'recomendacion': "80 kg N/ha, 36 kg P₂O₅/ha, 32 kg K₂O/ha."},
+    {'cultivo': 'sorgo', 'suelo': 'arenoso',   'clima': 'seco',   'recomendacion': "90 kg N/ha, 40 kg P₂O₅/ha, 35 kg K₂O/ha."},
+    {'cultivo': 'sorgo', 'suelo': 'arenoso',   'clima': 'humedo', 'recomendacion': "100 kg N/ha, 45 kg P₂O₅/ha, 40 kg K₂O/ha."},
+
+    # TOMATE
+    {'cultivo': 'tomate', 'suelo': 'franco',    'clima': 'templado', 'recomendacion': "200 kg N/ha, 150 kg P₂O₅/ha, 100 kg K₂O/ha. Riego cada 2 días."},
+    {'cultivo': 'tomate', 'suelo': 'franco',    'clima': 'tropical', 'recomendacion': "180 kg N/ha, 140 kg P₂O₅/ha, 110 kg K₂O/ha. Revisar plagas."},
+    {'cultivo': 'tomate', 'suelo': 'arcilloso', 'clima': 'humedo',   'recomendacion': "180 kg N/ha, 120 kg P₂O₅/ha, 90 kg K₂O/ha. Fungicida preventivo."},
+    {'cultivo': 'tomate', 'suelo': 'arcilloso', 'clima': 'seco',     'recomendacion': "160 kg N/ha, 100 kg P₂O₅/ha, 80 kg K₂O/ha. Aporte de materia orgánica."},
+
+    # CHILE
+    {'cultivo': 'chile', 'suelo': 'arenoso', 'clima': 'seco',   'recomendacion': "110 kg N/ha, 70 kg P₂O₅/ha, 90 kg K₂O/ha. Riego frecuente."},
+    {'cultivo': 'chile', 'suelo': 'arenoso', 'clima': 'humedo', 'recomendacion': "120 kg N/ha, 80 kg P₂O₅/ha, 95 kg K₂O/ha. Control de malezas."},
+    {'cultivo': 'chile', 'suelo': 'franco',  'clima': 'tropical', 'recomendacion': "115 kg N/ha, 75 kg P₂O₅/ha, 92 kg K₂O/ha. Fertilización dividida."},
+
+    # PEPINO
+    {'cultivo': 'pepino', 'suelo': 'franco',  'clima': 'templado', 'recomendacion': "85 kg N/ha, 60 kg P₂O₅/ha, 95 kg K₂O/ha. Riego por goteo."},
+    {'cultivo': 'pepino', 'suelo': 'franco',  'clima': 'tropical', 'recomendacion': "90 kg N/ha, 65 kg P₂O₅/ha, 100 kg K₂O/ha."},
+    {'cultivo': 'pepino', 'suelo': 'arenoso', 'clima': 'seco',     'recomendacion': "95 kg N/ha, 70 kg P₂O₅/ha, 110 kg K₂O/ha. Materia orgánica."},
+
+    # CEBOLLA
+    {'cultivo': 'cebolla', 'suelo': 'limo',  'clima': 'humedo',   'recomendacion': "100 kg N/ha, 50 kg P₂O₅/ha, 80 kg K₂O/ha. Evitar inundaciones."},
+    {'cultivo': 'cebolla', 'suelo': 'limo',  'clima': 'templado', 'recomendacion': "105 kg N/ha, 55 kg P₂O₅/ha, 85 kg K₂O/ha."},
+
+    # REPOLLO
+    {'cultivo': 'repollo', 'suelo': 'franco',  'clima': 'tropical', 'recomendacion': "130 kg N/ha, 70 kg P₂O₅/ha, 110 kg K₂O/ha. Riego regular."},
+    {'cultivo': 'repollo', 'suelo': 'franco',  'clima': 'humedo',   'recomendacion': "135 kg N/ha, 75 kg P₂O₅/ha, 115 kg K₂O/ha. Revisar drenaje."},
+
+    # ZANAHORIA
+    {'cultivo': 'zanahoria', 'suelo': 'limo',  'clima': 'humedo',   'recomendacion': "90 kg N/ha, 40 kg P₂O₅/ha, 50 kg K₂O/ha. Riego regular."},
+    {'cultivo': 'zanahoria', 'suelo': 'limo',  'clima': 'templado', 'recomendacion': "95 kg N/ha, 45 kg P₂O₅/ha, 55 kg K₂O/ha."},
+
+    # LECHUGA
+    {'cultivo': 'lechuga', 'suelo': 'franco',  'clima': 'tropical', 'recomendacion': "60 kg N/ha, 30 kg P₂O₅/ha, 70 kg K₂O/ha. Mantener suelo húmedo."},
+    {'cultivo': 'lechuga', 'suelo': 'franco',  'clima': 'templado', 'recomendacion': "65 kg N/ha, 32 kg P₂O₅/ha, 75 kg K₂O/ha."},
+
+    # AYOTE
+    {'cultivo': 'ayote', 'suelo': 'arcilloso', 'clima': 'seco',   'recomendacion': "70 kg N/ha, 45 kg P₂O₅/ha, 60 kg K₂O/ha. Drenaje fundamental."},
+    {'cultivo': 'ayote', 'suelo': 'arcilloso', 'clima': 'humedo', 'recomendacion': "75 kg N/ha, 50 kg P₂O₅/ha, 65 kg K₂O/ha."},
+
+    # RÁBANO
+    {'cultivo': 'rabano', 'suelo': 'franco',  'clima': 'tropical', 'recomendacion': "40 kg N/ha, 20 kg P₂O₅/ha, 40 kg K₂O/ha."},
+    {'cultivo': 'rabano', 'suelo': 'franco',  'clima': 'humedo',   'recomendacion': "42 kg N/ha, 22 kg P₂O₅/ha, 42 kg K₂O/ha."},
+
+    # PIPIAN
+    {'cultivo': 'pipian', 'suelo': 'franco',    'clima': 'tropical', 'recomendacion': "65 kg N/ha, 35 kg P₂O₅/ha, 65 kg K₂O/ha."},
+    {'cultivo': 'pipian', 'suelo': 'arcilloso', 'clima': 'humedo',   'recomendacion': "70 kg N/ha, 38 kg P₂O₅/ha, 68 kg K₂O/ha."},
+
+    # ESPINACA
+    {'cultivo': 'espinaca', 'suelo': 'arenoso', 'clima': 'templado', 'recomendacion': "85 kg N/ha, 40 kg P₂O₅/ha, 80 kg K₂O/ha. Controlar malezas."},
+    {'cultivo': 'espinaca', 'suelo': 'arenoso', 'clima': 'humedo',   'recomendacion': "87 kg N/ha, 41 kg P₂O₅/ha, 85 kg K₂O/ha."},
+
+    # GUISQUIL
+    {'cultivo': 'guisquil', 'suelo': 'volcanico', 'clima': 'humedo',   'recomendacion': "65 kg N/ha, 28 kg P₂O₅/ha, 70 kg K₂O/ha."},
+    {'cultivo': 'guisquil', 'suelo': 'volcanico', 'clima': 'tropical', 'recomendacion': "68 kg N/ha, 29 kg P₂O₅/ha, 74 kg K₂O/ha."},
 ]
 
-# === PLAGAS Y ENFERMEDADES PRINCIPALES ===
-PLAGAS = [
-    # === MAÍZ ===
-    {
-        'cultivo': 'maiz',
-        'plaga': 'Gusano cogollero (Spodoptera frugiperda)',
-        'sintomas': [
-            'hojas raspadas',
-            'orificios en hojas nuevas',
-            'excremento de larva visible',
-            'cogollo dañado'
-        ],
-        'umbral': '5% plantas afectadas',
-        'tratamientos': [
-            {
-                'producto': 'Coragen 20SC',
-                'ingrediente': 'Clorantraniliprol 20%',
-                'dosis': '10 ml/100 L agua',
-                'intervalo': '15 días',
-                'clase': 'Diamida',
-                'restricciones': 'Máximo 2 aplicaciones por ciclo'
-            }
-        ],
-        'estrategia': 'Aplicar en horas de la tarde cuando larvas están activas'
-    },
-    {
-        'cultivo': 'maiz',
-        'plaga': 'Mancha foliar de Maíz (Bipolaris maydis)',
-        'sintomas': [
-            'manchas alargadas color marrón',
-            'necrosis marginal en hojas',
-            'manchas con halo clorótico'
-        ],
-        'umbral': '10% plantas con síntomas',
-        'tratamientos': [
-            {
-                'producto': 'Opera',
-                'ingrediente': 'Pyraclostrobin + Epoxiconazole',
-                'dosis': '1 l/ha',
-                'intervalo': 'Aplicar a la aparición',
-                'clase': 'Estrobilurina + triazol',
-                'restricciones': 'No aplicar con viento fuerte'
-            }
-        ],
-        'estrategia': 'Rotar con otros fungicidas'
-    },
-    # === FRIJOL ===
-    {
-        'cultivo': 'frijol',
-        'plaga': 'Mosca blanca (Bemisia tabaci)',
-        'sintomas': [
-            'melaza en hojas',
-            'fumagina',
-            'amarillamiento',
-            'enrollamiento hojas'
-        ],
-        'umbral': '10 adultos/hoja',
-        'tratamientos': [
-            {
-                'producto': 'Actara 25WG',
-                'ingrediente': 'Tiametoxam 25%',
-                'dosis': '50 g/100 L agua',
-                'intervalo': '21 días',
-                'clase': 'Neonicotinoide',
-                'restricciones': 'No aplicar en floración'
-            }
-        ],
-        'estrategia': 'Rotar con productos de diferente grupo químico'
-    },
-    {
-        'cultivo': 'frijol',
-        'plaga': 'Antracnosis',
-        'sintomas': [
-            'manchas hundidas en vainas',
-            'hojas con bordes secos',
-            'tallo con lesiones negras'
-        ],
-        'umbral': 'Primeras lesiones visibles',
-        'tratamientos': [
-            {
-                'producto': 'Cercobin 50WP',
-                'ingrediente': 'Carbendazim 50%',
-                'dosis': '1 g/L agua',
-                'intervalo': '10-14 días',
-                'clase': 'Benzimidazol',
-                'restricciones': 'Máximo 2 aplicaciones por ciclo'
-            }
-        ],
-        'estrategia': 'Eliminar restos de cosecha'
-    },
-    # === SORGO ===
-    {
-        'cultivo': 'sorgo',
-        'plaga': 'Pulgón amarillo del sorgo (Melanaphis sacchari)',
-        'sintomas': [
-            'manchas amarillas en hojas',
-            'melaza pegajosa',
-            'hormigas en la planta'
-        ],
-        'umbral': '20 pulgones por hoja',
-        'tratamientos': [
-            {
-                'producto': 'Transform WG',
-                'ingrediente': 'Sulfoxaflor',
-                'dosis': '0.1 g/L agua',
-                'intervalo': '10 días',
-                'clase': 'Sulfoximina',
-                'restricciones': 'No aplicar durante floración'
-            }
-        ],
-        'estrategia': 'Monitoreo semanal en campo'
-    },
-    # === ARROZ ===
-    {
-        'cultivo': 'arroz',
-        'plaga': 'Barrenador del tallo (Scirpophaga incertulas)',
-        'sintomas': [
-            'tallos vacíos',
-            'espigas blancas',
-            'pupas dentro del tallo'
-        ],
-        'umbral': '5% plantas afectadas',
-        'tratamientos': [
-            {
-                'producto': 'Virtako 60WG',
-                'ingrediente': 'Clorantraniliprol + Lambda cihalotrina',
-                'dosis': '60 g/ha',
-                'intervalo': '15 días',
-                'clase': 'Diamida + piretroide',
-                'restricciones': 'Intervalo de seguridad 20 días'
-            }
-        ],
-        'estrategia': 'Eliminar socas después de cosecha'
-    },
-    # === TOMATE ===
-    {
-        'cultivo': 'tomate',
-        'plaga': 'Tuta absoluta',
-        'sintomas': [
-            'minas en hojas',
-            'galerías en frutos',
-            'necrosis de tejidos'
-        ],
-        'umbral': '3 adultos/trampa/semana',
-        'tratamientos': [
-            {
-                'producto': 'Proclaim 5SG',
-                'ingrediente': 'Emamectina benzoato 5%',
-                'dosis': '500 g/ha',
-                'intervalo': '7 días',
-                'clase': 'Avermectina',
-                'restricciones': 'Intervalo de seguridad 3 días'
-            }
-        ],
-        'estrategia': 'Combina aplicaciones foliares con trampeo masivo'
-    },
-    {
-        'cultivo': 'tomate',
-        'plaga': 'Tizón tardío (Phytophthora infestans)',
-        'sintomas': [
-            'manchas marrón oscuro en hojas',
-            'frutos con áreas acuosas',
-            'hojas con bordes marchitos'
-        ],
-        'umbral': 'Aparición de los primeros síntomas',
-        'tratamientos': [
-            {
-                'producto': 'Ridomil Gold',
-                'ingrediente': 'Metalaxil-M + Mancozeb',
-                'dosis': '2.5 g/L agua',
-                'intervalo': '10 días',
-                'clase': 'Fungicida sistémico',
-                'restricciones': 'No aplicar después de cuaje'
-            }
-        ],
-        'estrategia': 'Eliminar hojas enfermas, aplicar preventivo en época de lluvias'
-    },
-    # === CHILE ===
-    {
-        'cultivo': 'chile',
-        'plaga': 'Trips (Frankliniella occidentalis)',
-        'sintomas': [
-            'manchas plateadas en hojas',
-            'hojas deformadas',
-            'frutos con cicatrices'
-        ],
-        'umbral': '5 trips por hoja',
-        'tratamientos': [
-            {
-                'producto': 'Success 48SC',
-                'ingrediente': 'Spinosad 48%',
-                'dosis': '1 ml/L agua',
-                'intervalo': '7 días',
-                'clase': 'Espinosina',
-                'restricciones': 'No aplicar durante floración'
-            }
-        ],
-        'estrategia': 'Monitorear con trampas azules'
-    },
-    # === CEBOLLA ===
-    {
-        'cultivo': 'cebolla',
-        'plaga': 'Mosca de la cebolla (Delia antiqua)',
-        'sintomas': [
-            'plántulas caídas',
-            'bulbo podrido',
-            'presencia de larvas'
-        ],
-        'umbral': '2 larvas/planta',
-        'tratamientos': [
-            {
-                'producto': 'Lorsban 480EC',
-                'ingrediente': 'Clorpirifos 48%',
-                'dosis': '2 ml/L agua',
-                'intervalo': '15 días',
-                'clase': 'Organofosforado',
-                'restricciones': 'Respetar periodo de carencia'
-            }
-        ],
-        'estrategia': 'Rotar con otros ingredientes activos'
-    },
-    # === LECHUGA ===
-    {
-        'cultivo': 'lechuga',
-        'plaga': 'Pulgón verde (Nasonovia ribisnigri)',
-        'sintomas': [
-            'hojas enrolladas',
-            'colonia de insectos verdes',
-            'mielada en hojas'
-        ],
-        'umbral': '5 pulgones/planta',
-        'tratamientos': [
-            {
-                'producto': 'Movento 100SC',
-                'ingrediente': 'Spirotetramat 10%',
-                'dosis': '0.75 ml/L agua',
-                'intervalo': '14 días',
-                'clase': 'Tetramic acid',
-                'restricciones': 'No aplicar antes de cosecha'
-            }
-        ],
-        'estrategia': 'Usar jabón potásico previo a tratamiento'
-    },
-    # === ZANAHORIA ===
-    {
-        'cultivo': 'zanahoria',
-        'plaga': 'Mosca de la zanahoria (Psila rosae)',
-        'sintomas': [
-            'galerías en raíz',
-            'raíz deformada',
-            'presencia de larvas'
-        ],
-        'umbral': '1 larva/raíz',
-        'tratamientos': [
-            {
-                'producto': 'Decis 25EC',
-                'ingrediente': 'Deltametrina 25%',
-                'dosis': '1 ml/L agua',
-                'intervalo': '10 días',
-                'clase': 'Piretroide',
-                'restricciones': 'No aplicar con alta temperatura'
-            }
-        ],
-        'estrategia': 'Evitar siembra en zonas infestadas'
-    },
-    # === ESPINACA ===
-    {
-        'cultivo': 'espinaca',
-        'plaga': 'Minador de hoja (Liriomyza spp.)',
-        'sintomas': [
-            'manchas blancas irregulares',
-            'hojas con galerías',
-            'reducción de crecimiento'
-        ],
-        'umbral': '3 minadores/hoja',
-        'tratamientos': [
-            {
-                'producto': 'Agri-Mek 1.8 EC',
-                'ingrediente': 'Abamectina 1.8%',
-                'dosis': '1 ml/L agua',
-                'intervalo': '7 días',
-                'clase': 'Avermectina',
-                'restricciones': 'Intervalo de seguridad 7 días'
-            }
-        ],
-        'estrategia': 'Eliminar hojas afectadas'
-    },
-    # === REPOLLO ===
-    {
-        'cultivo': 'repollo',
-        'plaga': 'Palomilla de la col (Plutella xylostella)',
-        'sintomas': [
-            'orificios en hojas',
-            'larvas en envés de hojas',
-            'excremento granular'
-        ],
-        'umbral': '1 larva/planta',
-        'tratamientos': [
-            {
-                'producto': 'Bacillus thuringiensis',
-                'ingrediente': 'Bt kurstaki',
-                'dosis': '0.5 g/L agua',
-                'intervalo': '7 días',
-                'clase': 'Microbiológico',
-                'restricciones': 'Repetir después de lluvia'
-            }
-        ],
-        'estrategia': 'Rotar cultivos, monitoreo constante'
-    },
-    # === AYOTE ===
-    {
-        'cultivo': 'ayote',
-        'plaga': 'Antracnosis (Colletotrichum orbiculare)',
-        'sintomas': [
-            'manchas negruzcas en fruto',
-            'hojas con lesiones circulares',
-            'caída prematura de hojas'
-        ],
-        'umbral': 'Primeros síntomas',
-        'tratamientos': [
-            {
-                'producto': 'Score 250EC',
-                'ingrediente': 'Difenoconazol 25%',
-                'dosis': '0.5 ml/L agua',
-                'intervalo': '10 días',
-                'clase': 'Triazol',
-                'restricciones': 'No aplicar durante floración'
-            }
-        ],
-        'estrategia': 'Aplicar a la aparición de síntomas'
-    },
-    # === GUISQUIL ===
-    {
-        'cultivo': 'guisquil',
-        'plaga': 'Oídio (Erysiphe cichoracearum)',
-        'sintomas': [
-            'manchas blancas en hojas',
-            'polvo blanco en tallos',
-            'enrollamiento de hojas'
-        ],
-        'umbral': 'Primeras manchas',
-        'tratamientos': [
-            {
-                'producto': 'Azufre mojable',
-                'ingrediente': 'Azufre',
-                'dosis': '2 g/L agua',
-                'intervalo': '7 días',
-                'clase': 'Inorgánico',
-                'restricciones': 'No aplicar con alta humedad'
-            }
-        ],
-        'estrategia': 'Retirar hojas afectadas'
-    }
+# --- REGLAS DE DIAGNÓSTICO: síntomas por cultivo ---
+DIAGNOSTICOS = [
+    # MAÍZ
+    {'cultivo': 'maiz', 'sintomas': ['manchas amarillas', 'pudricion tallo'], 'diagnostico': 'Hongo Fusarium', 'recomendacion': 'Rotar cultivos, aplicar benomilo.'},
+    {'cultivo': 'maiz', 'sintomas': ['hojas enrolladas', 'gusanos'], 'diagnostico': 'Gusano cogollero', 'recomendacion': 'Aplicar insecticida biológico.'},
+    {'cultivo': 'maiz', 'sintomas': ['puntos blancos', 'telaraña'], 'diagnostico': 'Araña roja', 'recomendacion': 'Liberar enemigos naturales, aplicar azufre.'},
+    {'cultivo': 'maiz', 'sintomas': ['marchitez', 'raices negras'], 'diagnostico': 'Pythium', 'recomendacion': 'Mejorar drenaje, fungicida para suelo.'},
+    {'cultivo': 'maiz', 'sintomas': ['hojas amarillas', 'manchas marrones'], 'diagnostico': 'Mancha foliar', 'recomendacion': 'Eliminar residuos, usar semilla resistente.'},
+    {'cultivo': 'maiz', 'sintomas': ['hojas blancas', 'crecimiento detenido'], 'diagnostico': 'Mildiu', 'recomendacion': 'Fungicida específico, eliminar plantas infectadas.'},
+
+    # FRIJOL
+    {'cultivo': 'frijol', 'sintomas': ['manchas marrones', 'hojas'], 'diagnostico': 'Antracnosis', 'recomendacion': 'Aplicar fungicida, usar semillas certificadas.'},
+    {'cultivo': 'frijol', 'sintomas': ['hojas amarillas', 'insectos pequeños'], 'diagnostico': 'Pulgón', 'recomendacion': 'Jabón potásico, control biológico.'},
+    {'cultivo': 'frijol', 'sintomas': ['hojas deformes', 'necrosis'], 'diagnostico': 'Virus del mosaico', 'recomendacion': 'Remover plantas afectadas.'},
+    {'cultivo': 'frijol', 'sintomas': ['manchas negras', 'tallo quebradizo'], 'diagnostico': 'Bacteriosis', 'recomendacion': 'Eliminar restos de cultivo, rotación de cultivos.'},
+    {'cultivo': 'frijol', 'sintomas': ['flores caídas', 'vainas vacías'], 'diagnostico': 'Deficiencia de micronutrientes', 'recomendacion': 'Fertilizante con micronutrientes.'},
+
+    # ARROZ
+    {'cultivo': 'arroz', 'sintomas': ['puntas secas', 'manchas grises'], 'diagnostico': 'Mancha marrón', 'recomendacion': 'Reducir nitrógeno, fungicida.'},
+    {'cultivo': 'arroz', 'sintomas': ['tallos negros', 'mal olor'], 'diagnostico': 'Tizón por Rhizoctonia', 'recomendacion': 'Secar campos, fungicida específico.'},
+    {'cultivo': 'arroz', 'sintomas': ['plantas caídas', 'base podrida'], 'diagnostico': 'Podredumbre del tallo', 'recomendacion': 'Mejorar drenaje, fungicida de suelo.'},
+    {'cultivo': 'arroz', 'sintomas': ['hojas enrolladas', 'maleza presente'], 'diagnostico': 'Daño por chinche', 'recomendacion': 'Control de malezas, insecticida selectivo.'},
+
+    # SORGO
+    {'cultivo': 'sorgo', 'sintomas': ['manchas rojizas', 'hojas secas'], 'diagnostico': 'Antracnosis', 'recomendacion': 'Aplicar fungicida.'},
+    {'cultivo': 'sorgo', 'sintomas': ['hojas enrolladas', 'insectos'], 'diagnostico': 'Mosca del sorgo', 'recomendacion': 'Control biológico, eliminar malezas.'},
+    {'cultivo': 'sorgo', 'sintomas': ['tallos blandos', 'pudricion en la base'], 'diagnostico': 'Podredumbre del tallo', 'recomendacion': 'Mejorar aireación.'},
+
+    # TOMATE
+    {'cultivo': 'tomate', 'sintomas': ['manchas oscuras', 'hojas'], 'diagnostico': 'Tizón temprano', 'recomendacion': 'Aplicar mancozeb, eliminar hojas afectadas.'},
+    {'cultivo': 'tomate', 'sintomas': ['tallos podridos'], 'diagnostico': 'Pudrición bacteriana', 'recomendacion': 'Mejorar drenaje, usar semillas tratadas.'},
+    {'cultivo': 'tomate', 'sintomas': ['frutos con agujeros', 'larvas dentro'], 'diagnostico': 'Mosca de la fruta', 'recomendacion': 'Colocar trampas, recoger frutos caídos.'},
+    {'cultivo': 'tomate', 'sintomas': ['hojas enrolladas', 'crecimiento lento'], 'diagnostico': 'Virus del rizado amarillo', 'recomendacion': 'Eliminar plantas afectadas.'},
+
+    # CHILE
+    {'cultivo': 'chile', 'sintomas': ['manchas blancas', 'hojas caídas'], 'diagnostico': 'Oídio', 'recomendacion': 'Aplicar azufre mojable.'},
+    {'cultivo': 'chile', 'sintomas': ['hojas deformes', 'manchas amarillas'], 'diagnostico': 'Trips', 'recomendacion': 'Control biológico, insecticida selectivo.'},
+    {'cultivo': 'chile', 'sintomas': ['frutos podridos', 'moho blanco'], 'diagnostico': 'Moho blanco', 'recomendacion': 'Eliminar frutos afectados.'},
+
+    # PEPINO
+    {'cultivo': 'pepino', 'sintomas': ['manchas amarillas', 'hojas secas'], 'diagnostico': 'Mildiu', 'recomendacion': 'Mejorar ventilación, fungicida adecuado.'},
+    {'cultivo': 'pepino', 'sintomas': ['tallos blandos', 'pudricion'], 'diagnostico': 'Podredumbre blanda', 'recomendacion': 'Reducir riego, evitar daños mecánicos.'},
+    {'cultivo': 'pepino', 'sintomas': ['frutos curvos', 'hojas pálidas'], 'diagnostico': 'Deficiencia de potasio', 'recomendacion': 'Fertilizante potásico.'},
+
+    # CEBOLLA
+    {'cultivo': 'cebolla', 'sintomas': ['bulbo blando', 'mal olor'], 'diagnostico': 'Podredumbre bacteriana', 'recomendacion': 'Mejorar drenaje, evitar riego excesivo.'},
+    {'cultivo': 'cebolla', 'sintomas': ['hojas amarillas', 'caídas'], 'diagnostico': 'Mosca de la cebolla', 'recomendacion': 'Aplicar insecticida, eliminar restos de cosecha.'},
+
+    # REPOLLO
+    {'cultivo': 'repollo', 'sintomas': ['manchas negras', 'hojas perforadas'], 'diagnostico': 'Plaga de gusanos', 'recomendacion': 'Control biológico, eliminar larvas.'},
+    {'cultivo': 'repollo', 'sintomas': ['manchas circulares', 'hojas húmedas'], 'diagnostico': 'Bacteriosis', 'recomendacion': 'Eliminar hojas afectadas.'},
+
+    # ZANAHORIA
+    {'cultivo': 'zanahoria', 'sintomas': ['raices deformes', 'manchas marrones'], 'diagnostico': 'Nemátodos', 'recomendacion': 'Rotar cultivos, solarización.'},
+    {'cultivo': 'zanahoria', 'sintomas': ['hojas amarillas', 'crecimiento lento'], 'diagnostico': 'Deficiencia de nutrientes', 'recomendacion': 'Fertilizar con compost.'},
+
+    # LECHUGA
+    {'cultivo': 'lechuga', 'sintomas': ['manchas cafes', 'bordes quemados'], 'diagnostico': 'Tipburn', 'recomendacion': 'Evitar estrés hídrico, mejorar ventilación.'},
+    {'cultivo': 'lechuga', 'sintomas': ['hojas blandas', 'mal olor'], 'diagnostico': 'Podredumbre blanda', 'recomendacion': 'Reducir riego, evitar daño mecánico.'},
+
+    # ESPINACA
+    {'cultivo': 'espinaca', 'sintomas': ['hojas amarillas', 'manchas marrones'], 'diagnostico': 'Mancha foliar', 'recomendacion': 'Mejorar ventilación, eliminar hojas infectadas.'},
+    {'cultivo': 'espinaca', 'sintomas': ['tallos podridos'], 'diagnostico': 'Pythium', 'recomendacion': 'Fungicida de suelo, evitar exceso de agua.'},
+
+    # AYOTE
+    {'cultivo': 'ayote', 'sintomas': ['frutos blandos', 'olor ácido'], 'diagnostico': 'Podredumbre', 'recomendacion': 'Mejorar drenaje, eliminar frutos afectados.'},
+    {'cultivo': 'ayote', 'sintomas': ['hojas secas', 'tallo agrietado'], 'diagnostico': 'Estrés hídrico', 'recomendacion': 'Aumentar riego.'},
+
+    # GUISQUIL
+    {'cultivo': 'guisquil', 'sintomas': ['manchas blancas', 'hojas enrolladas'], 'diagnostico': 'Oídio', 'recomendacion': 'Fungicida, podar brotes afectados.'},
+    {'cultivo': 'guisquil', 'sintomas': ['hojas deformes', 'coloración violeta'], 'diagnostico': 'Virus', 'recomendacion': 'Eliminar plantas afectadas, controlar vectores.'},
 ]
 
-# === PARAMETROS PARA INTERFAZ ===
-PARAMETROS = {
-    'cultivos': [
-        'maiz', 'frijol', 'sorgo', 'arroz', 'caña',
-        'tomate', 'chile', 'cebolla', 'lechuga', 'zanahoria',
-        'espinaca', 'repollo', 'ayote', 'guisquil', 'pipian', 'rabano'
-    ],
-    'variedades': {
-        'maiz': ['híbrido', 'criollo'],
-        'frijol': ['rojo de seda', 'negro'],
-        'arroz': ['IR-8'],
-        'caña': ['CP 72-2086'],
-        'tomate': ['híbrido'],
-        'chile': ['jalapeño'],
-        'cebolla': ['amarilla'],
-        'lechuga': ['crispada'],
-        'zanahoria': ['nantesa'],
-        'espinaca': ['viroflay'],
-        'repollo': ['corazón de buey'],
-        'ayote': ['criollo'],
-        'guisquil': ['verde'],
-        'pipian': ['criollo'],
-        'rabano': ['criollo']
-    },
-    'suelos': ['arcilloso', 'arenoso', 'volcánico', 'franco', 'limo'],
-    'climas': ['tropical', 'seco', 'húmedo', 'templado'],
-    'etapas': ['siembra', 'trasplante', 'desarrollo', 'floración', 'producción'],
-    'sintomas': list(sorted(set(s for p in PLAGAS for s in p['sintomas'])))
-}
+# === ACUAPONIA ===
+ACUAPONIA = [
+    {'pez': 'tilapia', 'cultivo': 'lechuga', 'recomendacion': 'pH 6.5-7.5, nitritos <0.5 ppm, recambio semanal, buena oxigenación, luz suficiente.'},
+    {'pez': 'tilapia', 'cultivo': 'tomate',  'recomendacion': 'pH 6.8-7.5, suplemento Ca/Mg, oxigenación alta, monitorear nutrientes.'},
+    {'pez': 'tilapia', 'cultivo': 'albahaca', 'recomendacion': 'pH 6.5-7.2, control de amonio, sombra parcial.'},
+    {'pez': 'tilapia', 'cultivo': 'espinaca', 'recomendacion': 'pH 6.2-7.0, recambio parcial semanal, sombra parcial.'},
+    {'pez': 'tilapia', 'cultivo': 'menta',    'recomendacion': 'pH 6.7-7.4, cambio de agua cada 10 días, podar raíces.'},
+
+    {'pez': 'bagre',   'cultivo': 'albahaca', 'recomendacion': 'pH 7-8, NO2 <0.3 ppm, circulación buena, sombra parcial.'},
+    {'pez': 'bagre',   'cultivo': 'lechuga',  'recomendacion': 'pH 7-7.5, buena aireación, cambio de agua cada semana.'},
+    {'pez': 'bagre',   'cultivo': 'espinaca', 'recomendacion': 'pH 7-8, recambio parcial frecuente, iluminación media.'},
+
+    {'pez': 'carpa',   'cultivo': 'espinaca', 'recomendacion': 'pH 6.5-7.2, NO3 <50 ppm, control de algas, buena iluminación.'},
+    {'pez': 'carpa',   'cultivo': 'tomate',   'recomendacion': 'pH 6.8-7.2, filtro biológico, buena aireación, suplemento de Ca.'},
+    {'pez': 'carpa',   'cultivo': 'lechuga',  'recomendacion': 'pH 7.0-7.5, recambio parcial de agua, buena luz.'},
+
+    {'pez': 'dorado',  'cultivo': 'albahaca', 'recomendacion': 'pH 7.5, recambio cada 10 días, nutrientes bien balanceados.'},
+    {'pez': 'dorado',  'cultivo': 'tomate',   'recomendacion': 'pH 7.5-8, excelente oxigenación, monitoreo frecuente.'},
+    {'pez': 'dorado',  'cultivo': 'espinaca', 'recomendacion': 'pH 7.2-7.8, recambio parcial cada semana.'},
+]
+
+# === Listas para selects frontend ===
+CULTIVOS = sorted(list(set([r['cultivo'] for r in FERTILIZANTES])))
+SUELOS = sorted(list(set([r['suelo'] for r in FERTILIZANTES])))
+CLIMAS = sorted(list(set([r['clima'] for r in FERTILIZANTES])))
+
+PECES = sorted(list(set([r['pez'] for r in ACUAPONIA])))
+CULTIVOS_ACUA = sorted(list(set([r['cultivo'] for r in ACUAPONIA])))
+
+# Lista única de síntomas para el frontend
+SINTOMAS = sorted(list(set(s for r in DIAGNOSTICOS for s in r['sintomas'])))
