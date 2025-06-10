@@ -2,18 +2,21 @@ from flask import Blueprint, render_template, request, redirect, session, url_fo
 from models.models import crear_usuario, verificar_usuario, guardar_consulta, correo_existe
 from motor_inferencia.motor_inferencia import AsesorAgricola
 from werkzeug.security import check_password_hash
+from utils import nocache
 
 asesor = AsesorAgricola()
 
 main_blueprint = Blueprint('main', __name__)
 
 @main_blueprint.route('/')
+@nocache
 def index():
     if 'usuario_id' in session:
         return redirect(url_for('main.home'))
     return render_template('login.html')
 
 @main_blueprint.route('/login', methods=['POST'])
+@nocache
 def login():
     email = request.form['email']
     password = request.form['password']
@@ -25,13 +28,10 @@ def login():
         session['username'] = user[1]
         return redirect(url_for('main.home'))
 
-    # Si el usuario no está registrado o la contraseña no coincide
     return render_template('login.html', error="Usuario no registrado o contraseña incorrecta.")
 
-
-
-
 @main_blueprint.route('/register', methods=['GET', 'POST'])
+@nocache
 def register():
     if request.method == 'POST':
         username = request.form['username']
@@ -46,19 +46,21 @@ def register():
     
     return render_template('register.html')
 
-
 @main_blueprint.route('/logout')
+@nocache
 def logout():
     session.clear()
     return redirect(url_for('main.index'))
 
 @main_blueprint.route('/home')
+@nocache
 def home():
     if 'usuario_id' not in session:
         return redirect(url_for('main.index'))
     return render_template('home.html', username=session['username'])
 
 @main_blueprint.route('/fertilizante', methods=['GET', 'POST'])
+@nocache
 def fertilizante():
     resultado = None
     advertencias = []
@@ -74,8 +76,8 @@ def fertilizante():
         cultivo = request.form['cultivo']
         suelo = request.form['suelo']
         clima = request.form['clima']
-        etapa = request.form.get('etapa')  # Puede ser None
-        variedad = request.form.get('variedad')  # Puede ser None
+        etapa = request.form.get('etapa')
+        variedad = request.form.get('variedad')
         variedades = variedades_dict.get(cultivo, [])
 
         response = asesor.recomendar_fertilizacion(
@@ -109,6 +111,7 @@ def fertilizante():
     )
 
 @main_blueprint.route('/diagnostico', methods=['GET', 'POST'])
+@nocache
 def diagnostico():
     sugerencias = []
     quimicos = []
@@ -125,6 +128,7 @@ def diagnostico():
             quimicos = response.get('quimicos_recomendados', [])
         else:
             sugerencias = response.get('sugerencias', [])
+
         if 'usuario_id' in session:
             guardar_consulta(session['usuario_id'], 'diagnostico', str(request.form), str(response))
 
@@ -136,4 +140,3 @@ def diagnostico():
         cultivos=cultivos,
         sintomas_lista=sintomas_lista
     )
-

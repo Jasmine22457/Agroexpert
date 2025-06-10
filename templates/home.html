@@ -1,85 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>AgroExpert - Inicio</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    html, body {
-      height: 100%;
-      font-family: 'Segoe UI', sans-serif;
-    }
-    .hero-bg {
-      background-image: url("{{ url_for('static', filename='img/hortaliza2.jpg') }}");
-      background-size: cover;
-      background-position: center;
-    }
-    .card-hover:hover {
-      transform: scale(1.03);
-      box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
+
+    <title>AgroExpert - Inicio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html,
+        body {
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .hero-bg {
+            background-image: url("{{ url_for('static', filename='img/hortaliza2.jpg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-hover:hover {
+            transform: scale(1.03);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.4);
+        }
+    </style>
 </head>
+
 <body class="hero-bg text-white relative">
 
-  <!-- Capa oscura -->
-  <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
+    <!-- Capa oscura -->
+    <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
-  <!-- Navbar -->
-  <nav class="relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-10 backdrop-blur-md shadow-md rounded-b-2xl">
-    <h1 class="text-2xl md:text-3xl font-bold text-green-300">
-      🌿 ¡Hola, {{ username }}!
-    </h1>
-    <button
-      id="logoutBtn"
-      class="px-4 py-2 text-white font-semibold rounded-lg transition bg-green-500 hover:bg-green-600 bg-opacity-80 backdrop-blur-sm"
-      aria-label="Cerrar sesión"
-    >
-      🔒 Cerrar sesión
-    </button>
-  </nav>
+    <!-- Navbar -->
+    <nav
+        class="relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-10 backdrop-blur-md shadow-md rounded-b-2xl">
+        <h1 class="text-2xl md:text-3xl font-bold text-green-300">
+            🌿 ¡Hola, {{ username }}!
+        </h1>
+        <button id="logoutBtn"
+            class="px-4 py-2 text-white font-semibold rounded-lg transition bg-green-500 hover:bg-green-600 bg-opacity-80 backdrop-blur-sm"
+            aria-label="Cerrar sesión">
+            🔒 Cerrar sesión
+        </button>
+    </nav>
 
-  <!-- Contenido principal -->
-  <main class="relative z-10 px-6 py-12">
-    <section class="max-w-6xl mx-auto text-center mb-12">
-      <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-100">
-        Tu asistente agrícola inteligente está listo para ayudarte.
-      </h2>
-      <p class="text-lg text-green-200">Selecciona una opción para comenzar:</p>
-    </section>
+    <!-- Contenido principal -->
+    <main class="relative z-10 px-6 py-12">
+        <section class="max-w-6xl mx-auto text-center mb-12">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 text-green-100">
+                Tu asistente agrícola inteligente está listo para ayudarte.
+            </h2>
+            <p class="text-lg text-green-200">Selecciona una opción para comenzar:</p>
+        </section>
 
-    <!-- Tarjetas -->
-    <section class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-      <!-- Fertilizantes -->
-      <a href="/fertilizante" class="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 text-center text-white transition transform card-hover">
-        <div class="text-6xl mb-4">🚜</div>
-        <h3 class="text-xl font-bold mb-2">Recomendador de Fertilizantes</h3>
-        <p class="text-sm text-green-100">Recibe sugerencias para mejorar el rendimiento de tus cultivos.</p>
-      </a>
+        <!-- Tarjetas -->
+        <section class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            <!-- Fertilizantes -->
+            <a href="/fertilizante"
+                class="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 text-center text-white transition transform card-hover">
+                <div class="text-6xl mb-4">🚜</div>
+                <h3 class="text-xl font-bold mb-2">Recomendador de Fertilizantes</h3>
+                <p class="text-sm text-green-100">Recibe sugerencias para mejorar el rendimiento de tus cultivos.</p>
+            </a>
 
-      <!-- Diagnóstico -->
-      <a href="/diagnostico" class="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 text-center text-white transition transform card-hover">
-        <div class="text-6xl mb-4">🐛</div>
-        <h3 class="text-xl font-bold mb-2">Diagnóstico de Plagas o Enfermedades</h3>
-        <p class="text-sm text-green-100">Detecta problemas en tus cultivos y cómo solucionarlos.</p>
-      </a>
+            <!-- Diagnóstico -->
+            <a href="/diagnostico"
+                class="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 text-center text-white transition transform card-hover">
+                <div class="text-6xl mb-4">🐛</div>
+                <h3 class="text-xl font-bold mb-2">Diagnóstico de Plagas o Enfermedades</h3>
+                <p class="text-sm text-green-100">Detecta problemas en tus cultivos y cómo solucionarlos.</p>
+            </a>
 
-      <!-- Acuaponía -->
-      <a href="/acuaponia" class="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 text-center text-white transition transform card-hover">
-        <div class="text-6xl mb-4">🌊</div>
-        <h3 class="text-xl font-bold mb-2">Acuaponía</h3>
-        <p class="text-sm text-green-100">Aprende cómo integrar peces y plantas en un ecosistema eficiente.</p>
-      </a>
-    </section>
-  </main>
+            <!-- Acuaponía -->
+            <a href="/acuaponia"
+                class="bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 text-center text-white transition transform card-hover">
+                <div class="text-6xl mb-4">🌊</div>
+                <h3 class="text-xl font-bold mb-2">Acuaponía</h3>
+                <p class="text-sm text-green-100">Aprende cómo integrar peces y plantas en un ecosistema eficiente.</p>
+            </a>
+        </section>
+    </main>
 
-  <!-- Script para cerrar sesión directamente -->
-  <script>
-    document.getElementById('logoutBtn').addEventListener('click', () => {
-      window.location.href = '/logout';
-    });
-  </script>
+    <!-- Script para cerrar sesión directamente -->
+    <script>
+        document.getElementById('logoutBtn').addEventListener('click', () => {
+            window.location.href = '/logout';
+        });
+    </script>
+
+    <script>
+        if (window.history && window.history.pushState) {
+            window.history.pushState(null, null, window.location.href);
+            window.onpopstate = function () {
+                window.location.href = '/logout';  // Ajusta si tu ruta de logout es distinta
+            };
+        }
+    </script>
+
 
 </body>
+
 </html>
