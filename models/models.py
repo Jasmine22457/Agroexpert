@@ -4,7 +4,7 @@ def get_connection():
     return psycopg2.connect(
         host="localhost",
         user="postgres",
-        password="1234",  # Cambia por tu password real
+        password="123",  # Cambia por tu password real
         dbname="Agroexpert"
     )
 

@@ -1,15 +1,138 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Registro</title>
+  <meta charset="UTF-8" />
+  <title>AgroExpert | Registro</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    html, body {
+      height: 100%;
+    }
+  </style>
 </head>
-<body>
-    <h2>Registrarse</h2>
-    <form method="post">
-        <input name="username" placeholder="Usuario" required>
-        <input name="password" type="password" placeholder="Contraseña" required>
-        <button type="submit">Registrar</button>
-    </form>
-    <a href="/">Volver a inicio</a>
+<body class="relative">
+
+  <!-- Fondo con imagen local -->
+  <div class="absolute inset-0 bg-cover bg-center z-0"
+       style="background-image: url('{{ url_for('static', filename='img/hortaliza.png')}}');">
+  </div>
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+  <!-- Contenedor del formulario -->
+  <div class="flex items-center justify-center min-h-screen relative z-10 px-4">
+    <div class="bg-white bg-opacity-90 backdrop-blur-md shadow-2xl rounded-2xl p-10 w-full max-w-md">
+      <h2 class="text-3xl font-extrabold text-green-800 mb-6 text-center">Crear cuenta</h2>
+
+      <form id="registerForm" method="post" class="space-y-6" novalidate>
+        <input id="username" name="username" type="text" placeholder="Usuario"
+               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+               required autocomplete="username" />
+
+        <!-- Contraseña -->
+        <div class="relative">
+          <input id="password" name="password" type="password" placeholder="Contraseña"
+                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12"
+                 required autocomplete="new-password" minlength="5" />
+          <button type="button" id="togglePassword"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-green-600 focus:outline-none select-none">
+            👁️
+          </button>
+        </div>
+
+        <!-- Confirmar contraseña -->
+        <div class="relative">
+          <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirmar contraseña"
+                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12"
+                 required autocomplete="new-password" />
+          <button type="button" id="toggleConfirmPassword"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-green-600 focus:outline-none select-none">
+            👁️
+          </button>
+        </div>
+
+        <button type="submit"
+                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">
+          Registrar
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-gray-700">
+        ¿Ya tienes una cuenta?
+        <a href="/" class="text-green-600 hover:underline font-medium">Volver a inicio</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- SweetAlert2: mensajes desde el backend -->
+  {% if error %}
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Error en el registro',
+      text: '{{ error }}',
+      confirmButtonColor: '#38a169'
+    });
+  </script>
+  {% endif %}
+
+  {% if message %}
+  <script>
+    Swal.fire({
+      icon: 'success',
+      title: 'Registro exitoso',
+      text: '{{ message }}',
+      confirmButtonColor: '#38a169'
+    });
+  </script>
+  {% endif %}
+
+  <!-- JS para mostrar/ocultar contraseñas -->
+  <script>
+    const togglePassword = document.getElementById('togglePassword');
+    const password = document.getElementById('password');
+    togglePassword.addEventListener('click', () => {
+      const type = password.type === 'password' ? 'text' : 'password';
+      password.type = type;
+      togglePassword.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+
+    const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+    const confirmPassword = document.getElementById('confirmPassword');
+    toggleConfirmPassword.addEventListener('click', () => {
+      const type = confirmPassword.type === 'password' ? 'text' : 'password';
+      confirmPassword.type = type;
+      toggleConfirmPassword.textContent = type === 'password' ? '👁️' : '🙈';
+    });
+
+    // Validación del formulario
+    document.getElementById('registerForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+
+      const usernameVal = username.value.trim();
+      const passwordVal = password.value;
+      const confirmPasswordVal = confirmPassword.value;
+
+      if (!usernameVal || !passwordVal || !confirmPasswordVal) {
+        Swal.fire({ icon: 'error', title: 'Campos incompletos', text: 'Completa todos los campos.', confirmButtonColor: '#38a169' });
+        return;
+      }
+
+      if (passwordVal.length < 5) {
+        Swal.fire({ icon: 'error', title: 'Contraseña corta', text: 'Debe tener al menos 5 caracteres.', confirmButtonColor: '#38a169' });
+        return;
+      }
+
+      if (passwordVal !== confirmPasswordVal) {
+        Swal.fire({ icon: 'error', title: 'Error', text: 'Las contraseñas no coinciden.', confirmButtonColor: '#38a169' });
+        return;
+      }
+
+      this.submit();
+    });
+  </script>
+
 </body>
 </html>
