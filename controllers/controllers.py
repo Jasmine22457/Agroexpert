@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for
 from models.models import crear_usuario, verificar_usuario, guardar_consulta
 from motor_inferencia.motor_inferencia import AsesorAgricola
+from werkzeug.security import check_password_hash
 
 asesor = AsesorAgricola()
 
@@ -14,21 +15,30 @@ def index():
 
 @main_blueprint.route('/login', methods=['POST'])
 def login():
-    username = request.form['username']
+    email = request.form['email']
     password = request.form['password']
-    user = verificar_usuario(username, password)
+    
+    user = verificar_usuario(email, password)
+    
     if user:
-        session['usuario_id'] = user[0]
-        session['username'] = username
+        session['usuario_id'] = user[0]  
+        session['username'] = user[1]   
         return redirect(url_for('main.home'))
-    return render_template('login.html', error="Usuario o clave incorrectos.")
+    
+    return render_template('login.html', error="Correo o clave incorrectos.")
+
+
 
 @main_blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     if request.method == 'POST':
-        crear_usuario(request.form['username'], request.form['password'])
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        crear_usuario(username, email, password)
         return redirect(url_for('main.index'))
     return render_template('register.html')
+
 
 @main_blueprint.route('/logout')
 def logout():
