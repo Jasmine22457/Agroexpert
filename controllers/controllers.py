@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for
-from models.models import crear_usuario, verificar_usuario, guardar_consulta
+from models.models import crear_usuario, verificar_usuario, guardar_consulta, correo_existe
 from motor_inferencia.motor_inferencia import AsesorAgricola
 from werkzeug.security import check_password_hash
 
@@ -17,15 +17,17 @@ def index():
 def login():
     email = request.form['email']
     password = request.form['password']
-    
+
     user = verificar_usuario(email, password)
-    
+
     if user:
-        session['usuario_id'] = user[0]  
-        session['username'] = user[1]   
+        session['usuario_id'] = user[0]
+        session['username'] = user[1]
         return redirect(url_for('main.home'))
-    
-    return render_template('login.html', error="Correo o clave incorrectos.")
+
+    # Si el usuario no está registrado o la contraseña no coincide
+    return render_template('login.html', error="Usuario no registrado o contraseña incorrecta.")
+
 
 
 
@@ -35,8 +37,13 @@ def register():
         username = request.form['username']
         email = request.form['email']
         password = request.form['password']
+
+        if correo_existe(email):
+            return render_template('register.html', error="El correo ya está registrado.")
+
         crear_usuario(username, email, password)
-        return redirect(url_for('main.index'))
+        return render_template('register.html', message="Registro exitoso.")
+    
     return render_template('register.html')
 
 

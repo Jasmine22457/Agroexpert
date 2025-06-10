@@ -31,6 +31,15 @@ def verificar_usuario(email, password):
         return (user[0], user[2])  # id y username
     return None
 
+def correo_existe(email):
+    conn = get_connection()
+    cur = conn.cursor()
+    cur.execute("SELECT id FROM usuario WHERE email = %s", (email,))
+    existe = cur.fetchone() is not None
+    cur.close()
+    conn.close()
+    return existe
+
 def guardar_consulta(usuario_id, tipo, parametros, resultado):
     conn = get_connection()
     cur = conn.cursor()
@@ -39,3 +48,6 @@ def guardar_consulta(usuario_id, tipo, parametros, resultado):
     conn.commit()
     cur.close()
     conn.close()
+
+
+
