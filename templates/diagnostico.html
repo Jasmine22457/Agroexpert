@@ -1,34 +1,115 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
-    <title>Diagnóstico</title>
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-<meta http-equiv="Pragma" content="no-cache" />
-<meta http-equiv="Expires" content="0" />
-
+    <meta charset="UTF-8">
+    <title>Diagnóstico de Plagas y Enfermedades</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        .sintoma-checkbox {
+            margin-right: 10px;
+            margin-bottom: 6px;
+        }
+        #sintomas-checkboxes {
+            margin-bottom: 15px;
+            margin-top: 6px;
+        }
+        label.sintoma-label {
+            display: block;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-    <h2>Diagnóstico de Plagas o Enfermedades</h2>
-    <form method="post">
-        <label>Cultivo:
-            <select name="cultivo" required>
-                {% for c in cultivos %}
-                <option value="{{c}}">{{c|capitalize}}</option>
-                {% endfor %}
-            </select>
-        </label>
-        <br>
-        <span>Síntomas (selecciona los presentes):</span><br>
-        {% for s in sintomas_lista %}
-            <label><input type="checkbox" name="sintomas" value="{{s}}" {% if s in sintomas %}checked{% endif %}> {{s|capitalize}}</label>
-            {% if loop.index % 4 == 0 %}<br>{% endif %}
-        {% endfor %}
-        <br>
-        <button type="submit">Diagnosticar</button>
+    <h2>Diagnóstico de Plagas y Enfermedades</h2>
+    <form method="POST" action="{{ url_for('main.diagnostico') }}">
+        <label for="cultivo">Cultivo:</label>
+        <select id="cultivo" name="cultivo" required>
+            <option value="">-- Seleccione --</option>
+            {% for c in cultivos %}
+            <option value="{{ c }}">{{ c|capitalize }}</option>
+            {% endfor %}
+        </select>
+        <br><br>
+
+        <label>Síntomas:</label>
+        <div id="sintomas-checkboxes">
+            {% for s in sintomas_lista %}
+                <label class="sintoma-label">
+                    <input type="checkbox" class="sintoma-checkbox" name="sintomas" value="{{ s }}">
+                    {{ s|capitalize }}
+                </label>
+            {% endfor %}
+        </div>
+        <button type="submit" style="margin-top: 12px;">Diagnosticar</button>
     </form>
-    {% if resultado %}
-        <div><strong>Diagnóstico:</strong> {{ resultado }}</div>
+
+    <hr>
+    {% if diagnosticos %}
+    <h3>Resultados del Diagnóstico</h3>
+    {% for d in diagnosticos %}
+    <div style="border:1px solid #ccc; margin-bottom:16px; padding:10px;">
+        <strong>Plaga/Enfermedad:</strong> {{ d.plaga }}<br>
+        <strong>Coincidencia:</strong> {{ d.coincidencia }}<br>
+        <strong>Síntomas coincidentes:</strong> {{ d.sintomas_coincidentes|join(', ') }}<br>
+        <strong>Estrategia:</strong> {{ d.estrategia }}<br>
+        <strong>Tratamientos recomendados:</strong>
+        <ul>
+            {% for t in d.tratamientos %}
+            <li>
+                <b>Producto:</b> {{ t.producto }} ({{ t.clase }}) |
+                <b>Dosis:</b> {{ t.dosis }}<br>
+                <i>{{ t.restricciones }}</i>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endfor %}
+    {% elif sugerencias %}
+    <h3>No se identificó la plaga/enfermedad</h3>
+    <b>Sugerencias más comunes para este cultivo:</b>
+    <ul>
+        {% for s in sugerencias %}
+        <li>{{ s }}</li>
+        {% endfor %}
+    </ul>
     {% endif %}
-    <a href="/home">Volver</a>
+
+    {% if quimicos %}
+    <h3>Productos químicos recomendados</h3>
+    <ul>
+        {% for q in quimicos %}
+        <li>
+            <b>Producto:</b> {{ q.producto }} |
+            <b>Clase:</b> {{ q.clase }} |
+            <b>Dosis:</b> {{ q.dosis }}
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+    <script>
+        $(function () {
+            $('#cultivo').change(function () {
+                let cultivo = $(this).val();
+                let $sintomasDiv = $('#sintomas-checkboxes');
+                $sintomasDiv.empty();
+                if (!cultivo) return;
+                $.getJSON('/sintomas/' + cultivo, function (data) {
+                    if (data.sintomas.length === 0) {
+                        $sintomasDiv.append('<em>No hay síntomas registrados para este cultivo.</em>');
+                    }
+                    for (let sintoma of data.sintomas) {
+                        let checkbox = $('<input type="checkbox" class="sintoma-checkbox">')
+                            .attr('name', 'sintomas')
+                            .attr('value', sintoma);
+                        let label = $('<label class="sintoma-label"></label>')
+                            .append(checkbox)
+                            .append(' ' + sintoma.charAt(0).toUpperCase() + sintoma.slice(1));
+                        $sintomasDiv.append(label);
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>

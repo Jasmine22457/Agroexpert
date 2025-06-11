@@ -518,6 +518,94 @@ PLAGAS = [
         'estrategia': 'Evitar siembras densas y exceso de nitrógeno'
     },
 
+    # CAÑA DE AZUCAR
+
+    {
+        'cultivo': 'caña',
+        'plaga': 'Barrenador del tallo (Diatraea saccharalis)',
+        'sintomas': [
+            'tallos perforados y quebradizos',
+            'hojas secas y amarillas',
+            'presencia de aserrín en orificios'
+        ],
+        'umbral': '5% tallos perforados',
+        'tratamientos': [
+            {
+                'producto': 'Lorsban 4E',
+                'ingrediente': 'Clorpirifos',
+                'dosis': '1.5 ml/L agua',
+                'intervalo': 'Al detectar plaga',
+                'clase': 'Organofosforado',
+                'restricciones': 'No aplicar cerca de la cosecha'
+            }
+        ],
+        'estrategia': 'Eliminación de residuos y rotación de cultivos'
+    },
+    {
+        'cultivo': 'caña',
+        'plaga': 'Pulgón amarillo (Melanaphis sacchari)',
+        'sintomas': [
+            'colonias en el envés de la hoja',
+            'hojas amarillas y pegajosas',
+            'melaza y fumagina'
+        ],
+        'umbral': '10% plantas infestadas',
+        'tratamientos': [
+            {
+                'producto': 'Confidor 350 SC',
+                'ingrediente': 'Imidacloprid',
+                'dosis': '0.5 ml/L agua',
+                'intervalo': 'A la detección',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en floración para proteger abejas'
+            }
+        ],
+        'estrategia': 'Monitoreo y control biológico'
+    },
+    # ENFERMEDADES
+    {
+        'cultivo': 'caña',
+        'plaga': 'Roya de la caña (Puccinia melanocephala)',
+        'sintomas': [
+            'pústulas anaranjadas en hojas',
+            'hojas secas prematuramente',
+            'baja producción de caña'
+        ],
+        'umbral': '10% hojas con pústulas',
+        'tratamientos': [
+            {
+                'producto': 'Tilt 250 EC',
+                'ingrediente': 'Propiconazole',
+                'dosis': '0.5 l/ha',
+                'intervalo': 'Cada 15 días según presencia',
+                'clase': 'Triazol',
+                'restricciones': 'No aplicar cerca de cosecha'
+            }
+        ],
+        'estrategia': 'Usar variedades resistentes y eliminar residuos'
+    },
+    {
+        'cultivo': 'caña',
+        'plaga': 'Carbón de la caña (Sporisorium scitamineum)',
+        'sintomas': [
+            'espigas negras en el extremo del tallo',
+            'crecimiento raquítico',
+            'tallos deformados'
+        ],
+        'umbral': 'Presencia en cualquier parte del lote',
+        'tratamientos': [
+            {
+                'producto': 'Eliminación de plantas afectadas',
+                'ingrediente': '---',
+                'dosis': '---',
+                'intervalo': 'Inmediato',
+                'clase': 'Cultural',
+                'restricciones': 'No hay tratamiento químico efectivo'
+            }
+        ],
+        'estrategia': 'Usar semilla sana y rotar cultivos'
+    },
+
     # ============================================  HORTALIZAS  =================================================
 
 
@@ -802,139 +890,617 @@ PLAGAS = [
         ],
         'estrategia': 'Eliminar restos de cultivo y evitar exceso de riego'
     },
-    
+
     # === LECHUGA ===
     {
         'cultivo': 'lechuga',
-        'plaga': 'Pulgón verde (Nasonovia ribisnigri)',
+        'plaga': 'Pulgón verde (Myzus persicae)',
         'sintomas': [
-            'hojas enrolladas',
-            'colonia de insectos verdes',
-            'mielada en hojas'
+            'hojas rizadas y pegajosas',
+            'presencia de insectos verdes pequeños',
+            'melaza sobre hojas'
         ],
-        'umbral': '5 pulgones/planta',
+        'umbral': '10% plantas infestadas',
         'tratamientos': [
             {
-                'producto': 'Movento 100SC',
-                'ingrediente': 'Spirotetramat 10%',
-                'dosis': '0.75 ml/L agua',
-                'intervalo': '14 días',
-                'clase': 'Tetramic acid',
-                'restricciones': 'No aplicar antes de cosecha'
+                'producto': 'Actara 25WG',
+                'ingrediente': 'Thiamethoxam',
+                'dosis': '0.3 g/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en presencia de abejas'
             }
         ],
-        'estrategia': 'Usar jabón potásico previo a tratamiento'
+        'estrategia': 'Favorecer control biológico con mariquitas'
     },
+    {
+        'cultivo': 'lechuga',
+        'plaga': 'Minador de hoja (Liriomyza spp.)',
+        'sintomas': [
+            'galerías serpenteantes en hojas',
+            'manchas claras irregulares',
+            'hojas secas prematuramente'
+        ],
+        'umbral': '5 minas por hoja',
+        'tratamientos': [
+            {
+                'producto': 'Tracer 480SC',
+                'ingrediente': 'Spinosad',
+                'dosis': '0.3 ml/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Espinosinas',
+                'restricciones': 'No aplicar con sol fuerte'
+            }
+        ],
+        'estrategia': 'Eliminar hojas muy dañadas y alternar productos'
+    },
+    # ENFERMEDADES
+    {
+        'cultivo': 'lechuga',
+        'plaga': 'Mildiu velloso (Bremia lactucae)',
+        'sintomas': [
+            'manchas amarillas en el haz',
+            'polvo blanco o gris en el envés',
+            'marchitez rápida de hojas'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Ridomil Gold',
+                'ingrediente': 'Metalaxil + Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Fenilamida + Ditiocarbamato',
+                'restricciones': 'No aplicar bajo lluvia'
+            }
+        ],
+        'estrategia': 'Favorecer ventilación y espaciamiento'
+    },
+    {
+        'cultivo': 'lechuga',
+        'plaga': 'Podredumbre blanda (Erwinia carotovora)',
+        'sintomas': [
+            'tallos y hojas blandas y acuosas',
+            'mal olor',
+            'tejido colapsado y desintegrado'
+        ],
+        'umbral': 'Presencia de síntomas',
+        'tratamientos': [
+            {
+                'producto': 'Eliminar plantas afectadas',
+                'ingrediente': '---',
+                'dosis': '---',
+                'intervalo': 'Inmediato',
+                'clase': 'Cultural',
+                'restricciones': 'No hay tratamiento químico efectivo'
+            }
+        ],
+        'estrategia': 'Evitar riego por aspersión y exceso de humedad'
+    },
+
     # === ZANAHORIA ===
     {
         'cultivo': 'zanahoria',
         'plaga': 'Mosca de la zanahoria (Psila rosae)',
         'sintomas': [
-            'galerías en raíz',
-            'raíz deformada',
-            'presencia de larvas'
+            'raíces con galerías y daños internos',
+            'hojas amarillas y marchitas',
+            'presencia de larvas blancas en raíces'
         ],
-        'umbral': '1 larva/raíz',
+        'umbral': 'Presencia en 5% de plantas',
         'tratamientos': [
             {
-                'producto': 'Decis 25EC',
-                'ingrediente': 'Deltametrina 25%',
-                'dosis': '1 ml/L agua',
-                'intervalo': '10 días',
-                'clase': 'Piretroide',
-                'restricciones': 'No aplicar con alta temperatura'
+                'producto': 'Lorsban 4E',
+                'ingrediente': 'Clorpirifos',
+                'dosis': '1.5 ml/L agua',
+                'intervalo': 'Aplicar al detectar plaga',
+                'clase': 'Organofosforado',
+                'restricciones': 'No aplicar cerca de la cosecha'
             }
         ],
-        'estrategia': 'Evitar siembra en zonas infestadas'
+        'estrategia': 'Rotar cultivos y eliminar residuos de cosecha'
     },
+    {
+        'cultivo': 'zanahoria',
+        'plaga': 'Pulgón verde (Myzus persicae)',
+        'sintomas': [
+            'hojas enrolladas y pegajosas',
+            'presencia de insectos verdes en hojas',
+            'desarrollo lento'
+        ],
+        'umbral': '10% plantas infestadas',
+        'tratamientos': [
+            {
+                'producto': 'Actara 25WG',
+                'ingrediente': 'Thiamethoxam',
+                'dosis': '0.3 g/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en presencia de abejas'
+            }
+        ],
+        'estrategia': 'Favorecer control biológico con mariquitas'
+    },
+    # ENFERMEDADES
+    {
+        'cultivo': 'zanahoria',
+        'plaga': 'Alternariosis (Alternaria dauci)',
+        'sintomas': [
+            'manchas oscuras en hojas y pecíolos',
+            'bordes amarillos en lesiones',
+            'secamiento de hojas externas'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Dithane M-45',
+                'ingrediente': 'Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7-10 días',
+                'clase': 'Ditiocarbamato',
+                'restricciones': 'No aplicar cerca de cosecha'
+            }
+        ],
+        'estrategia': 'Rotar cultivos y evitar exceso de humedad'
+    },
+    {
+        'cultivo': 'zanahoria',
+        'plaga': 'Mildiu polvoso (Erysiphe heraclei)',
+        'sintomas': [
+            'polvo blanco sobre hojas',
+            'amarillamiento de hojas',
+            'defoliación prematura'
+        ],
+        'umbral': '10% hojas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Topas 100 EC',
+                'ingrediente': 'Penconazole',
+                'dosis': '0.5 ml/L agua',
+                'intervalo': 'Cada 10 días',
+                'clase': 'Triazol',
+                'restricciones': 'No aplicar bajo lluvia'
+            }
+        ],
+        'estrategia': 'Favorecer ventilación y evitar riegos nocturnos'
+    },
+
     # === ESPINACA ===
+    {
+        'cultivo': 'espinaca',
+        'plaga': 'Pulgón verde (Myzus persicae)',
+        'sintomas': [
+            'hojas rizadas y pegajosas',
+            'presencia de insectos verdes pequeños',
+            'amarillamiento y crecimiento lento'
+        ],
+        'umbral': '10% plantas infestadas',
+        'tratamientos': [
+            {
+                'producto': 'Actara 25WG',
+                'ingrediente': 'Thiamethoxam',
+                'dosis': '0.3 g/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en presencia de abejas'
+            }
+        ],
+        'estrategia': 'Favorecer control biológico con mariquitas'
+    },
     {
         'cultivo': 'espinaca',
         'plaga': 'Minador de hoja (Liriomyza spp.)',
         'sintomas': [
-            'manchas blancas irregulares',
-            'hojas con galerías',
-            'reducción de crecimiento'
+            'galerías serpenteantes en hojas',
+            'manchas claras e irregulares',
+            'hojas secas prematuramente'
         ],
-        'umbral': '3 minadores/hoja',
+        'umbral': '5 minas por hoja',
         'tratamientos': [
             {
-                'producto': 'Agri-Mek 1.8 EC',
-                'ingrediente': 'Abamectina 1.8%',
-                'dosis': '1 ml/L agua',
-                'intervalo': '7 días',
-                'clase': 'Avermectina',
-                'restricciones': 'Intervalo de seguridad 7 días'
+                'producto': 'Tracer 480SC',
+                'ingrediente': 'Spinosad',
+                'dosis': '0.3 ml/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Espinosinas',
+                'restricciones': 'No aplicar bajo sol intenso'
             }
         ],
-        'estrategia': 'Eliminar hojas afectadas'
+        'estrategia': 'Eliminar hojas muy dañadas y alternar productos'
     },
+    # ENFERMEDADES
+    {
+        'cultivo': 'espinaca',
+        'plaga': 'Mildiu velloso (Peronospora farinosa f. sp. spinaciae)',
+        'sintomas': [
+            'manchas amarillas en el haz',
+            'polvo gris-violáceo en el envés',
+            'marchitez y muerte de hojas'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Ridomil Gold',
+                'ingrediente': 'Metalaxil + Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Fenilamida + Ditiocarbamato',
+                'restricciones': 'No aplicar bajo lluvia'
+            }
+        ],
+        'estrategia': 'Favorecer ventilación y evitar exceso de humedad'
+    },
+    {
+        'cultivo': 'espinaca',
+        'plaga': 'Alternariosis (Alternaria spp.)',
+        'sintomas': [
+            'manchas negruzcas en hojas',
+            'tejido seco y necrosado',
+            'pérdida de hojas externas'
+        ],
+        'umbral': '5% hojas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Dithane M-45',
+                'ingrediente': 'Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Ditiocarbamato',
+                'restricciones': 'No aplicar cerca de cosecha'
+            }
+        ],
+        'estrategia': 'Eliminar restos de cultivo y evitar riegos nocturnos'
+    },
+
+
     # === REPOLLO ===
     {
         'cultivo': 'repollo',
-        'plaga': 'Palomilla de la col (Plutella xylostella)',
+        'plaga': 'Palomilla dorso de diamante (Plutella xylostella)',
         'sintomas': [
             'orificios en hojas',
-            'larvas en envés de hojas',
-            'excremento granular'
+            'presencia de larvas verdes pequeñas',
+            'hojas perforadas y con galerías'
         ],
-        'umbral': '1 larva/planta',
+        'umbral': '5 larvas por planta',
         'tratamientos': [
             {
                 'producto': 'Bacillus thuringiensis',
-                'ingrediente': 'Bt kurstaki',
-                'dosis': '0.5 g/L agua',
-                'intervalo': '7 días',
-                'clase': 'Microbiológico',
-                'restricciones': 'Repetir después de lluvia'
+                'ingrediente': 'Bacillus thuringiensis var. kurstaki',
+                'dosis': '1 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Biológico',
+                'restricciones': 'No aplicar con lluvias'
             }
         ],
-        'estrategia': 'Rotar cultivos, monitoreo constante'
+        'estrategia': 'Monitoreo frecuente y alternar productos'
     },
+    {
+        'cultivo': 'repollo',
+        'plaga': 'Pulgón ceniciento (Brevicoryne brassicae)',
+        'sintomas': [
+            'colonias de pulgones grisáceos en hojas',
+            'hojas arrugadas y pegajosas',
+            'desarrollo lento de cabezas'
+        ],
+        'umbral': '10% plantas infestadas',
+        'tratamientos': [
+            {
+                'producto': 'Actara 25WG',
+                'ingrediente': 'Thiamethoxam',
+                'dosis': '0.4 g/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en presencia de abejas'
+            }
+        ],
+        'estrategia': 'Control biológico con mariquitas y evitar monocultivo'
+    },
+    # ENFERMEDADES
+    {
+        'cultivo': 'repollo',
+        'plaga': 'Alternariosis (Alternaria brassicae)',
+        'sintomas': [
+            'manchas marrón oscuro con halo amarillo',
+            'tejido seco y necrosado',
+            'manchas en hojas y tallos'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Dithane M-45',
+                'ingrediente': 'Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7-10 días',
+                'clase': 'Ditiocarbamato',
+                'restricciones': 'No aplicar cerca de cosecha'
+            }
+        ],
+        'estrategia': 'Eliminar restos de cultivo y rotar cultivos'
+    },
+    {
+        'cultivo': 'repollo',
+        'plaga': 'Mildiu velloso (Peronospora parasitica)',
+        'sintomas': [
+            'manchas amarillas en el haz',
+            'polvo blanco o gris en el envés',
+            'hojas secas prematuramente'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Ridomil Gold',
+                'ingrediente': 'Metalaxil + Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Fenilamida + Ditiocarbamato',
+                'restricciones': 'No aplicar bajo lluvia'
+            }
+        ],
+        'estrategia': 'Favorecer ventilación y espaciamiento'
+    },
+
     # === AYOTE ===
+    {
+        'cultivo': 'ayote',
+        'plaga': 'Mosca blanca (Bemisia tabaci)',
+        'sintomas': [
+            'hojas amarillas y enrolladas',
+            'presencia de insectos blancos en el envés',
+            'melaza y fumagina'
+        ],
+        'umbral': '10% plantas infestadas',
+        'tratamientos': [
+            {
+                'producto': 'Confidor 350 SC',
+                'ingrediente': 'Imidacloprid',
+                'dosis': '0.5 ml/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en floración para proteger abejas'
+            }
+        ],
+        'estrategia': 'Controlar malezas y alternar productos'
+    },
+    {
+        'cultivo': 'ayote',
+        'plaga': 'Trips (Frankliniella occidentalis)',
+        'sintomas': [
+            'hojas plateadas o bronceadas',
+            'deformación de hojas jóvenes',
+            'manchas necróticas en flores'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Spintor 120 SC',
+                'ingrediente': 'Spinosad',
+                'dosis': '1 ml/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Espinosinas',
+                'restricciones': 'No aplicar repetidamente'
+            }
+        ],
+        'estrategia': 'Monitoreo y alternar productos'
+    },
+    # ENFERMEDADES
+    {
+        'cultivo': 'ayote',
+        'plaga': 'Oídio (Sphaerotheca fuliginea)',
+        'sintomas': [
+            'polvo blanco sobre hojas',
+            'amarillamiento y caída de hojas',
+            'desarrollo lento de frutos'
+        ],
+        'umbral': '10% hojas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Topas 100EC',
+                'ingrediente': 'Penconazole',
+                'dosis': '0.4 ml/L agua',
+                'intervalo': 'Cada 10 días',
+                'clase': 'Triazol',
+                'restricciones': 'No aplicar bajo lluvia'
+            }
+        ],
+        'estrategia': 'Favorecer ventilación y espaciamiento'
+    },
     {
         'cultivo': 'ayote',
         'plaga': 'Antracnosis (Colletotrichum orbiculare)',
         'sintomas': [
-            'manchas negruzcas en fruto',
-            'hojas con lesiones circulares',
-            'caída prematura de hojas'
+            'manchas negras hundidas en hojas y frutos',
+            'tejido necrosado',
+            'frutos podridos'
         ],
-        'umbral': 'Primeros síntomas',
+        'umbral': '5% frutos afectados',
         'tratamientos': [
             {
-                'producto': 'Score 250EC',
-                'ingrediente': 'Difenoconazol 25%',
-                'dosis': '0.5 ml/L agua',
-                'intervalo': '10 días',
-                'clase': 'Triazol',
-                'restricciones': 'No aplicar durante floración'
+                'producto': 'Dithane M-45',
+                'ingrediente': 'Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Ditiocarbamato',
+                'restricciones': 'No aplicar cerca de cosecha'
             }
         ],
-        'estrategia': 'Aplicar a la aparición de síntomas'
+        'estrategia': 'Eliminar frutos enfermos y alternar productos'
     },
+
     # === GUISQUIL ===
     {
         'cultivo': 'guisquil',
-        'plaga': 'Oídio (Erysiphe cichoracearum)',
+        'plaga': 'Mosca blanca (Bemisia tabaci)',
         'sintomas': [
-            'manchas blancas en hojas',
-            'polvo blanco en tallos',
-            'enrollamiento de hojas'
+            'hojas amarillas y enrolladas',
+            'presencia de insectos blancos en el envés',
+            'melaza sobre hojas'
         ],
-        'umbral': 'Primeras manchas',
+        'umbral': '10% plantas infestadas',
         'tratamientos': [
             {
-                'producto': 'Azufre mojable',
-                'ingrediente': 'Azufre',
-                'dosis': '2 g/L agua',
-                'intervalo': '7 días',
-                'clase': 'Inorgánico',
-                'restricciones': 'No aplicar con alta humedad'
+                'producto': 'Actara 25WG',
+                'ingrediente': 'Thiamethoxam',
+                'dosis': '0.4 g/L agua',
+                'intervalo': 'Cada 10 días',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en floración para proteger abejas'
             }
         ],
-        'estrategia': 'Retirar hojas afectadas'
-    }
+        'estrategia': 'Controlar malezas y alternar productos'
+    },
+    {
+        'cultivo': 'guisquil',
+        'plaga': 'Pulgón verde (Myzus persicae)',
+        'sintomas': [
+            'hojas arrugadas y pegajosas',
+            'colonias de insectos verdes',
+            'crecimiento lento'
+        ],
+        'umbral': '10% plantas infestadas',
+        'tratamientos': [
+            {
+                'producto': 'Confidor 350 SC',
+                'ingrediente': 'Imidacloprid',
+                'dosis': '0.5 ml/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en presencia de abejas'
+            }
+        ],
+        'estrategia': 'Favorecer control biológico con mariquitas'
+    },
+    # ENFERMEDADES
+    {
+        'cultivo': 'guisquil',
+        'plaga': 'Mildiu velloso (Peronospora sp.)',
+        'sintomas': [
+            'manchas amarillas en el haz de la hoja',
+            'polvo gris o blanco en el envés',
+            'caída prematura de hojas'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Ridomil Gold',
+                'ingrediente': 'Metalaxil + Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Fenilamida + Ditiocarbamato',
+                'restricciones': 'No aplicar bajo lluvia'
+            }
+        ],
+        'estrategia': 'Favorecer ventilación y espaciamiento'
+    },
+    {
+        'cultivo': 'guisquil',
+        'plaga': 'Antracnosis (Colletotrichum sp.)',
+        'sintomas': [
+            'manchas negras hundidas en hojas y frutos',
+            'tejido necrosado',
+            'frutos deformes o podridos'
+        ],
+        'umbral': '5% frutos afectados',
+        'tratamientos': [
+            {
+                'producto': 'Dithane M-45',
+                'ingrediente': 'Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Ditiocarbamato',
+                'restricciones': 'No aplicar cerca de cosecha'
+            }
+        ],
+        'estrategia': 'Eliminar frutos enfermos y alternar productos'
+    },
+
+    # RABANO
+
+    {
+        'cultivo': 'rabano',
+        'plaga': 'Pulga saltona (Phyllotreta spp.)',
+        'sintomas': [
+            'pequeños orificios en hojas jóvenes',
+            'hojas perforadas y deformadas',
+            'daños más severos en plántulas'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Karate Zeon',
+                'ingrediente': 'Lambdacialotrina',
+                'dosis': '0.2 ml/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Piretroide',
+                'restricciones': 'No aplicar cerca de cosecha'
+            }
+        ],
+        'estrategia': 'Rotar cultivos y mantener el suelo libre de malezas'
+    },
+    {
+        'cultivo': 'rabano',
+        'plaga': 'Pulgón verde (Myzus persicae)',
+        'sintomas': [
+            'hojas arrugadas y pegajosas',
+            'presencia de insectos verdes en hojas',
+            'desarrollo lento'
+        ],
+        'umbral': '10% plantas infestadas',
+        'tratamientos': [
+            {
+                'producto': 'Actara 25WG',
+                'ingrediente': 'Thiamethoxam',
+                'dosis': '0.3 g/L agua',
+                'intervalo': 'A la aparición',
+                'clase': 'Neonicotinoide',
+                'restricciones': 'No aplicar en presencia de abejas'
+            }
+        ],
+        'estrategia': 'Favorecer control biológico con mariquitas'
+    },
+    # ENFERMEDADES
+    {
+        'cultivo': 'rabano',
+        'plaga': 'Mildiu velloso (Peronospora parasitica)',
+        'sintomas': [
+            'manchas amarillas en el haz de la hoja',
+            'polvo blanco o gris en el envés',
+            'hojas secas y marchitas'
+        ],
+        'umbral': '10% plantas afectadas',
+        'tratamientos': [
+            {
+                'producto': 'Ridomil Gold',
+                'ingrediente': 'Metalaxil + Mancozeb',
+                'dosis': '2 g/L agua',
+                'intervalo': 'Cada 7 días',
+                'clase': 'Fenilamida + Ditiocarbamato',
+                'restricciones': 'No aplicar bajo lluvia'
+            }
+        ],
+        'estrategia': 'Favorecer ventilación y espaciamiento'
+    },
+    {
+        'cultivo': 'rabano',
+        'plaga': 'Podredumbre blanca (Sclerotinia sclerotiorum)',
+        'sintomas': [
+            'moho blanco en la base de la raíz',
+            'tejido blando y acuoso',
+            'mal olor y colapso de la raíz'
+        ],
+        'umbral': 'Presencia de síntomas',
+        'tratamientos': [
+            {
+                'producto': 'Eliminar plantas afectadas',
+                'ingrediente': '---',
+                'dosis': '---',
+                'intervalo': 'Inmediato',
+                'clase': 'Cultural',
+                'restricciones': 'No hay tratamiento químico efectivo'
+            }
+        ],
+        'estrategia': 'Evitar riego excesivo y mejorar drenaje'
+    },
 ]
 
 # === PARAMETROS PARA INTERFAZ ===
@@ -963,6 +1529,17 @@ PARAMETROS = {
     },
     'suelos': ['arcilloso', 'arenoso', 'volcánico', 'franco', 'limo'],
     'climas': ['tropical', 'seco', 'húmedo', 'templado'],
-    'etapas': ['siembra', 'trasplante', 'desarrollo', 'floración', 'producción'],
-    'sintomas': list(sorted(set(s for p in PLAGAS for s in p['sintomas'])))
+    'etapas': ['siembra', 'trasplante', 'desarrollo', 'floración', 'producción']
+
 }
+
+def obtener_sintomas_por_cultivo(cultivo):
+    """
+    Recibe el nombre de un cultivo (str)
+    Devuelve una lista SIN REPETIDOS de todos los síntomas de plagas/enfermedades de ese cultivo
+    """
+    sintomas_set = set()
+    for plaga in PLAGAS:
+        if plaga['cultivo'] == cultivo:
+            sintomas_set.update(plaga['sintomas'])
+    return sorted(list(sintomas_set))

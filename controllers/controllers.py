@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, flash
-from models.models import crear_usuario, verificar_usuario, guardar_consulta, correo_existe, verificar_codigo
+from flask import Blueprint, render_template, request, redirect, session, url_for, flash, jsonify
+from models.models import crear_usuario, verificar_usuario, guardar_consulta, correo_existe, verificar_codigo, get_connection
 from motor_inferencia.motor_inferencia import AsesorAgricola
+from base_conocimiento.base_conomiento_plagas import obtener_sintomas_por_cultivo
 from werkzeug.security import check_password_hash
 from utils import nocache
 import smtplib
@@ -10,6 +11,10 @@ from flask import jsonify
 from models.models import get_connection
 import secrets
 import string
+
+
+
+
 
 asesor = AsesorAgricola()
 
@@ -217,6 +222,11 @@ def fertilizante():
         etapas=etapas,
         variedades=variedades
     )
+
+@main_blueprint.route('/sintomas/<cultivo>')
+def sintomas_por_cultivo(cultivo):
+    sintomas = obtener_sintomas_por_cultivo(cultivo)
+    return jsonify({'sintomas': sintomas})
 
 @main_blueprint.route('/diagnostico', methods=['GET', 'POST'])
 @nocache

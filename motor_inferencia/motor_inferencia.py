@@ -1,5 +1,8 @@
+# motor_inferencia/motor_inferencia.py
+
 from typing import List, Dict, Optional
-from base_conocimiento.base_conocimiento import FERTILIZANTES, PLAGAS, PARAMETROS
+from base_conocimiento.base_conocimiento import FERTILIZANTES, PARAMETROS
+from base_conocimiento.base_conomiento_plagas import PLAGAS
 
 class AsesorAgricola:
     """Sistema experto para recomendaciones agrícolas en El Salvador"""
@@ -116,4 +119,10 @@ class AsesorAgricola:
             return list(self.parametros['variedades'].keys())
         elif tipo == 'variedades_cultivo':
             return self.parametros['variedades']
+        elif tipo == 'sintomas':
+            # Por defecto, mostrar todos los síntomas conocidos
+            sintomas_set = set()
+            for plaga in PLAGAS:
+                sintomas_set.update(plaga['sintomas'])
+            return sorted(list(sintomas_set))
         return []
