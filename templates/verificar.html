@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>AgroExpert | Verificación</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <style>
+    html, body {
+      height: 100%;
+    }
+  </style>
+</head>
+<body class="relative">
+
+  <!-- Fondo con imagen -->
+  <div class="absolute inset-0 bg-cover bg-center z-0"
+       style="background-image: url('{{ url_for('static', filename='img/hortaliza.png')}}');">
+  </div>
+  <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+  <!-- Contenedor del formulario -->
+  <div class="flex items-center justify-center min-h-screen relative z-10 px-4">
+    <div class="bg-white bg-opacity-90 backdrop-blur-md shadow-2xl rounded-2xl p-10 w-full max-w-md">
+      <h2 class="text-3xl font-extrabold text-green-800 mb-6 text-center">Verificar correo</h2>
+      <p class="text-center mb-6">Hemos enviado un código de verificación a <span class="font-semibold">{{ email }}</span></p>
+
+      <form id="verificationForm" method="post" class="space-y-6">
+        <input type="hidden" name="email" value="{{ email }}">
+        
+        <!-- Código de verificación -->
+        <div class="flex justify-center">
+          <input id="codigo" name="codigo" type="text" placeholder="Código de 6 dígitos"
+                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 text-center tracking-widest"
+                 required maxlength="6" pattern="\d{6}" />
+        </div>
+
+        <button type="submit"
+                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">
+          Verificar
+        </button>
+      </form>
+
+      <p class="mt-6 text-center text-sm text-gray-700">
+        ¿No recibiste el código? 
+        <a href="#" id="reenviar" class="text-green-600 hover:underline font-medium">Reenviar código</a>
+      </p>
+    </div>
+  </div>
+
+  {% if error %}
+  <script>
+    Swal.fire({
+      icon: 'error',
+      title: 'Error de verificación',
+      text: '{{ error }}',
+      confirmButtonColor: '#38a169'
+    });
+  </script>
+  {% endif %}
+
+  <script>
+    // Validación del formulario
+    document.getElementById('verificationForm').addEventListener('submit', function(event) {
+      const codigo = document.getElementById('codigo').value.trim();
+      
+      if (!codigo || codigo.length !== 6 || !/^\d+$/.test(codigo)) {
+        event.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          title: 'Código inválido',
+          text: 'Ingresa un código de 6 dígitos numéricos',
+          confirmButtonColor: '#38a169'
+        });
+      }
+    });
+
+    // Reenviar código
+    document.getElementById('reenviar').addEventListener('click', function(e) {
+      e.preventDefault();
+      const email = document.querySelector('input[name="email"]').value;
+      
+      fetch('/reenviar-codigo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Código reenviado',
+            text: 'Se ha enviado un nuevo código a tu correo',
+            confirmButtonColor: '#38a169'
+          });
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: data.message || 'No se pudo reenviar el código',
+            confirmButtonColor: '#38a169'
+          });
+        }
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Ocurrió un error al reenviar el código',
+          confirmButtonColor: '#38a169'
+        });
+      });
+    });
+  </script>
+</body>
+</html>

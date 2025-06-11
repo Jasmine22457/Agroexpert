@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
   <meta charset="UTF-8" />
   <title>AgroExpert | Registro</title>
@@ -8,16 +9,18 @@
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <style>
-    html, body {
+    html,
+    body {
       height: 100%;
     }
   </style>
 </head>
+
 <body class="relative">
 
   <!-- Fondo con imagen -->
   <div class="absolute inset-0 bg-cover bg-center z-0"
-       style="background-image: url('{{ url_for('static', filename='img/hortaliza.png')}}');">
+    style="background-image: url('{{ url_for('static', filename='img/hortaliza.png')}}');">
   </div>
   <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
 
@@ -29,21 +32,21 @@
       <form id="registerForm" method="post" class="space-y-6" novalidate>
         <!-- Nombre de usuario -->
         <input id="username" name="username" type="text" placeholder="Nombre de usuario"
-               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-               required autocomplete="username" />
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" required
+          autocomplete="username" />
 
         <!-- Correo electrónico -->
         <input id="email" name="email" type="email" placeholder="Correo electrónico"
-               class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
-               required autocomplete="email" />
+          class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400" required
+          autocomplete="email" />
 
         <!-- Contraseña -->
         <div class="relative">
           <input id="password" name="password" type="password" placeholder="Contraseña"
-                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12"
-                 required autocomplete="new-password" minlength="5" />
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12"
+            required autocomplete="new-password" minlength="5" />
           <button type="button" id="togglePassword"
-                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-green-600 focus:outline-none select-none">
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-green-600 focus:outline-none select-none">
             👁️
           </button>
         </div>
@@ -51,16 +54,16 @@
         <!-- Confirmar contraseña -->
         <div class="relative">
           <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirmar contraseña"
-                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12"
-                 required autocomplete="new-password" />
+            class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400 pr-12"
+            required autocomplete="new-password" />
           <button type="button" id="toggleConfirmPassword"
-                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-green-600 focus:outline-none select-none">
+            class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-600 hover:text-green-600 focus:outline-none select-none">
             👁️
           </button>
         </div>
 
         <button type="submit"
-                class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">
+          class="w-full bg-green-600 text-white py-2 rounded-lg hover:bg-green-700 transition duration-300 font-semibold">
           Registrar
         </button>
       </form>
@@ -114,7 +117,7 @@
     });
 
     // Validación del formulario
-    document.getElementById('registerForm').addEventListener('submit', function(event) {
+    document.getElementById('registerForm').addEventListener('submit', function (event) {
       event.preventDefault();
 
       const usernameVal = username.value.trim();
@@ -140,6 +143,23 @@
       this.submit();
     });
   </script>
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function (e) {
+      const password = document.getElementById("password").value;
+      const confirm = document.getElementById("confirmPassword").value;
+      if (password !== confirm) {
+        e.preventDefault();
+        Swal.fire({
+          icon: 'error',
+          title: 'Contraseñas no coinciden',
+          text: 'Por favor, asegúrate de que ambas contraseñas sean iguales.',
+          confirmButtonColor: '#38a169'
+        });
+      }
+    });
+  </script>
+
 
 </body>
+
 </html>
