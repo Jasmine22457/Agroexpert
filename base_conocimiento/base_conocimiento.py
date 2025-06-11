@@ -7,7 +7,7 @@ Datos técnicos validados por INSAFO y literatura técnica Mesoamericana.
 
 # === FERTILIZANTES QUÍMICOS PARA GRANOS BÁSICOS Y HORTALIZAS ===
 FERTILIZANTES = [
-    # === MAÍZ ===
+    # ======= SIEMBRA =======
     {
         'cultivo': 'maiz',
         'variedad': 'híbrido',
@@ -25,195 +25,1061 @@ FERTILIZANTES = [
     {
         'cultivo': 'maiz',
         'variedad': 'criollo',
-        'suelo': 'arenoso',
-        'clima': 'seco',
+        'suelo': 'arcilloso',
+        'clima': 'tropical',
         'etapa': 'siembra',
         'recomendacion': {
-            'formula': '12-30-10 + micronutrientes',
+            'formula': '15-15-15',
             'dosis': '2.5 qq/manzana',
-            'aplicacion': 'Incorporar 5 cm debajo de la semilla',
+            'aplicacion': 'Aplicar en banda junto a la semilla',
             'fabricantes': ['Fertica'],
-            'precauciones': 'Requiere riego inmediato post-aplicación'
+            'precauciones': 'Evitar contacto directo con la semilla'
         }
     },
     {
         'cultivo': 'maiz',
         'variedad': 'híbrido',
-        'suelo': 'arcilloso',
-        'clima': 'tropical',
-        'etapa': 'desarrollo',
-        'recomendacion': {
-            'formula': '46-0-0 (Urea)',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar a los 25-30 días después de siembra, en banda',
-            'fabricantes': ['Fertica', 'Yara'],
-            'precauciones': 'Evitar aplicación en horas calurosas'
-        }
-    },
-    # === FRIJOL ===
-    {
-        'cultivo': 'frijol',
-        'variedad': 'rojo de seda',
         'suelo': 'volcánico',
         'clima': 'húmedo',
         'etapa': 'siembra',
         'recomendacion': {
+            'formula': '18-46-0',
+            'dosis': '3 qq/manzana',
+            'aplicacion': 'Incorporar al suelo antes de la siembra',
+            'fabricantes': ['Yara', 'Profertil'],
+            'precauciones': 'Regar después de la aplicación si es posible'
+        }
+    },
+    {
+        'cultivo': 'maiz',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'siembra',
+        'recomendacion': {
             'formula': '10-30-10',
             'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar en banda a 5 cm de profundidad',
+            'aplicacion': 'Al fondo del surco antes de sembrar',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar en exceso para evitar toxicidad'
+        }
+    },
+
+    # ======= DESARROLLO =======
+    {
+        'cultivo': 'maiz',
+        'variedad': 'híbrido',
+        'suelo': 'arcilloso',
+        'clima': 'húmedo',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '2 qq/manzana',
+            'aplicacion': 'Aplicar a los 25 días después de emergencia, alrededor de la planta',
+            'fabricantes': ['Yara', 'Fertica'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'maiz',
+        'variedad': 'criollo',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '1.5 qq/manzana',
+            'aplicacion': 'Aplicar entre las hileras a los 20-25 días',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Cubrir ligeramente con tierra'
+        }
+    },
+    {
+        'cultivo': 'maiz',
+        'variedad': 'híbrido',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0) + KCl',
+            'dosis': '1.5 qq Urea + 1 qq KCl/manzana',
+            'aplicacion': 'Al inicio de macollamiento',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No exceder dosis de potasio'
+        }
+    },
+
+    # ======= FLORACIÓN =======
+    {
+        'cultivo': 'maiz',
+        'variedad': 'híbrido',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'KCl (Cloruro de Potasio) 0-0-60',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar en corona al inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No exceder dosis para evitar toxicidad'
+        }
+    },
+    {
+        'cultivo': 'maiz',
+        'variedad': 'criollo',
+        'suelo': 'arcilloso',
+        'clima': 'húmedo',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fosfato monoamónico (12-52-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar al pie de la planta durante floración',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar encharcamientos'
+        }
+    },
+
+    # ======= PRODUCCIÓN =======
+    {
+        'cultivo': 'maiz',
+        'variedad': 'híbrido',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje en etapa de llenado de grano',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar a pleno sol'
+        }
+    },
+    {
+        'cultivo': 'maiz',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de magnesio',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar al follaje 30 días después de floración',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar aplicaciones bajo lluvias intensas'
+        }
+    },
+
+    # ======= TRASPLANTE (menos frecuente, pero posible en almácigos) =======
+    {
+        'cultivo': 'maiz',
+        'variedad': 'híbrido',
+        'suelo': 'arcilloso',
+        'clima': 'templado',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '18-46-0',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar en hoyo de trasplante',
             'fabricantes': ['Profertil'],
-            'precauciones': 'No aplicar en contacto directo con semilla'
+            'precauciones': 'Cubrir bien la raíz para evitar quemaduras'
+        }
+    },
+    {
+        'cultivo': 'maiz',
+        'variedad': 'criollo',
+        'suelo': 'volcánico',
+        'clima': 'húmedo',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '15-15-15',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En base del hoyo al trasplantar',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Regar suavemente después'
+        }
+    },
+    # ======= SIEMBRA =======
+    {
+        'cultivo': 'frijol',
+        'variedad': 'rojo de seda',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '10-30-10',
+            'dosis': '2 qq/manzana',
+            'aplicacion': 'Al fondo del surco antes de sembrar',
+            'fabricantes': ['Fertica', 'Yara'],
+            'precauciones': 'Evitar contacto directo con la semilla'
         }
     },
     {
         'cultivo': 'frijol',
         'variedad': 'negro',
+        'suelo': 'arcilloso',
+        'clima': 'húmedo',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '12-24-12',
+            'dosis': '2.5 qq/manzana',
+            'aplicacion': 'Aplicar e incorporar antes de la siembra',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar si hay exceso de humedad'
+        }
+    },
+    {
+        'cultivo': 'frijol',
+        'variedad': 'rojo de seda',
+        'suelo': 'volcánico',
+        'clima': 'templado',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '15-15-15',
+            'dosis': '2 qq/manzana',
+            'aplicacion': 'Aplicar al fondo del surco antes de sembrar',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Regar después de aplicar'
+        }
+    },
+
+    # ======= DESARROLLO =======
+    {
+        'cultivo': 'frijol',
+        'variedad': 'rojo de seda',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar 20 días después de emergencia, entre hileras',
+            'fabricantes': ['Yara', 'Fertica'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'frijol',
+        'variedad': 'negro',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar entre hileras, cubrir con tierra',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar aplicación si hay lluvia'
+        }
+    },
+
+    # ======= FLORACIÓN =======
+    {
+        'cultivo': 'frijol',
+        'variedad': 'rojo de seda',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fosfato monoamónico (12-52-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar al pie de la planta',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No exceder la dosis recomendada'
+        }
+    },
+    {
+        'cultivo': 'frijol',
+        'variedad': 'negro',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Sulfato de magnesio',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar al follaje durante floración',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar aplicaciones bajo lluvias intensas'
+        }
+    },
+
+    # ======= PRODUCCIÓN =======
+    {
+        'cultivo': 'frijol',
+        'variedad': 'rojo de seda',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje durante llenado de vaina',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar en horas de sol fuerte'
+        }
+    },
+    {
+        'cultivo': 'frijol',
+        'variedad': 'negro',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.25 qq/manzana',
+            'aplicacion': 'Aplicar al pie de la planta',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar sobredosis'
+        }
+    },
+
+    # ======= TRASPLANTE (raro pero posible en almácigo o trasplante de plántulas) =======
+    {
+        'cultivo': 'frijol',
+        'variedad': 'rojo de seda',
+        'suelo': 'arcilloso',
+        'clima': 'tropical',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '10-30-10',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar al fondo del hoyo al trasplantar',
+            'fabricantes': ['Yara', 'Fertica'],
+            'precauciones': 'Cubrir bien la raíz'
+        }
+    },
+    {
+        'cultivo': 'frijol',
+        'variedad': 'negro',
+        'suelo': 'volcánico',
+        'clima': 'húmedo',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '15-15-15',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En base del hoyo al trasplantar',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Regar suavemente después'
+        }
+    },
+    # ======= SIEMBRA =======
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
+        'suelo': 'arcilloso',
+        'clima': 'tropical',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '15-15-15',
+            'dosis': '2 qq/manzana',
+            'aplicacion': 'Aplicar en banda a 5 cm de profundidad antes de la siembra',
+            'fabricantes': ['Fertica', 'Profertil'],
+            'precauciones': 'No mezclar con semilla'
+        }
+    },
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
+        'suelo': 'arenoso',
+        'clima': 'seco',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '18-46-0',
+            'dosis': '2.5 qq/manzana',
+            'aplicacion': 'Incorporar al suelo antes de sembrar',
+            'fabricantes': ['Yara', 'Profertil'],
+            'precauciones': 'Regar si es posible para mejorar absorción'
+        }
+    },
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '12-24-12',
+            'dosis': '2 qq/manzana',
+            'aplicacion': 'Al fondo del surco',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar directamente sobre la semilla'
+        }
+    },
+
+    # ======= DESARROLLO =======
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
+        'suelo': 'arcilloso',
+        'clima': 'seco',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'A los 20 días después de emergencia, entre hileras',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar aplicación si hay sequía severa'
+        }
+    },
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
+        'suelo': 'arenoso',
+        'clima': 'tropical',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.8 qq/manzana',
+            'aplicacion': 'Aplicar entre hileras, cubrir ligeramente',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+
+    # ======= FLORACIÓN =======
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'KCl (0-0-60)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar al pie de la planta al inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No exceder dosis recomendada'
+        }
+    },
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
         'suelo': 'arenoso',
         'clima': 'seco',
         'etapa': 'floración',
         'recomendacion': {
-            'formula': '15-5-30 + 2MgO',
-            'dosis': '1.5 qq/manzana',
-            'aplicacion': 'Aplicación foliar en horas tempranas',
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.3 qq/manzana',
+            'aplicacion': 'Aplicar en spray sobre follaje',
             'fabricantes': ['Yara'],
-            'precauciones': 'Suspender si lluvia pronosticada en 24h'
+            'precauciones': 'No aplicar en horas de mayor radiación solar'
         }
     },
-    # === SORGO ===
+
+    # ======= PRODUCCIÓN =======
     {
         'cultivo': 'sorgo',
-        'variedad': 'granífero',
+        'variedad': 'tradicional',
         'suelo': 'arcilloso',
-        'clima': 'seco',
-        'etapa': 'siembra',
+        'clima': 'tropical',
+        'etapa': 'producción',
         'recomendacion': {
-            'formula': '80-60-00 + Zn (mezcla física)',
-            'dosis': '3 qq/manzana',
-            'aplicacion': 'Incorporar pre-siembra con rastra',
+            'formula': 'Sulfato de magnesio',
+            'dosis': '0.25 qq/manzana',
+            'aplicacion': 'Aplicar en etapa de llenado de grano',
             'fabricantes': ['Fertica'],
-            'precauciones': 'Requiere análisis de suelo previo'
+            'precauciones': 'Evitar aplicación bajo lluvia intensa'
         }
     },
-    # === ARROZ ===
+
+    # ======= TRASPLANTE (no es lo más común en sorgo, pero posible en investigación o almácigos) =======
+    {
+        'cultivo': 'sorgo',
+        'variedad': 'tradicional',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '15-15-15',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En hoyo de trasplante',
+            'fabricantes': ['Profertil'],
+            'precauciones': 'Cubrir raíces y regar inmediatamente'
+        }
+    },
+    # ======= SIEMBRA =======
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'arcilloso',
+        'clima': 'húmedo',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '12-24-12',
+            'dosis': '3 qq/manzana',
+            'aplicacion': 'Aplicar al momento de la siembra e incorporar al suelo',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Mantener suelo húmedo pero no saturado'
+        }
+    },
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '10-30-10',
+            'dosis': '2.5 qq/manzana',
+            'aplicacion': 'Al fondo del surco, antes de sembrar',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Evitar acumulación excesiva de agua'
+        }
+    },
+
+    # ======= DESARROLLO =======
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'arcilloso',
+        'clima': 'tropical',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '1.5 qq/manzana',
+            'aplicacion': 'A los 25 días después de emergencia, entre hileras',
+            'fabricantes': ['Yara', 'Fertica'],
+            'precauciones': 'Evitar aplicación si hay inundación'
+        }
+    },
     {
         'cultivo': 'arroz',
         'variedad': 'IR-8',
         'suelo': 'franco',
         'clima': 'húmedo',
-        'etapa': 'siembra',
+        'etapa': 'desarrollo',
         'recomendacion': {
-            'formula': '15-15-15',
-            'dosis': '2.5 qq/manzana',
-            'aplicacion': 'Aplicar al voleo antes de la inundación',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'No aplicar si suelo saturado'
+            'formula': 'Urea (46-0-0)',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar 20 días después de emergencia',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
         }
     },
+
+    # ======= FLORACIÓN =======
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'arcilloso',
+        'clima': 'húmedo',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje al inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar en horas de sol fuerte'
+        }
+    },
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar al pie de la planta',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar sobredosis'
+        }
+    },
+
+    # ======= PRODUCCIÓN =======
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'arcilloso',
+        'clima': 'húmedo',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de magnesio',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar durante el llenado de grano',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar aplicación bajo lluvia intensa'
+        }
+    },
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.3 qq/manzana',
+            'aplicacion': 'Rociar sobre el follaje',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar a pleno sol'
+        }
+    },
+
+    # ======= TRASPLANTE (usado en arroz bajo riego o trasplante manual) =======
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'arcilloso',
+        'clima': 'tropical',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '12-24-12',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En el agua antes de trasplantar las plántulas',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar sobredosis en agua'
+        }
+    },
+    {
+        'cultivo': 'arroz',
+        'variedad': 'IR-8',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '10-30-10',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar al fondo del surco antes de trasplantar',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Cubrir bien raíces y regar suavemente'
+        }
+    },
+    
     # === CAÑA DE AZÚCAR ===
     {
         'cultivo': 'caña',
         'variedad': 'CP 72-2086',
         'suelo': 'franco',
         'clima': 'tropical',
-        'etapa': 'desarrollo',
+        'etapa': 'siembra',
         'recomendacion': {
-            'formula': '25-5-15 + 4S + 1Zn',
+            'formula': '18-46-0',
             'dosis': '4 qq/manzana',
-            'aplicacion': 'Aplicación en banda a 30 cm de planta',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'No aplicar con vientos >15 km/h'
+            'aplicacion': 'Aplicar en banda al momento de la siembra',
+            'fabricantes': ['Fertica', 'Yara'],
+            'precauciones': 'No aplicar en contacto directo con la semilla'
         }
     },
+    {
+        'cultivo': 'caña',
+        'variedad': 'CP 72-2086',
+        'suelo': 'volcánico',
+        'clima': 'húmedo',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '3 qq/manzana',
+            'aplicacion': 'A los 45 días después de brotación',
+            'fabricantes': ['Fertica', 'Profertil'],
+            'precauciones': 'Evitar aplicación con suelos saturados de agua'
+        }
+    },
+    {
+        'cultivo': 'caña',
+        'variedad': 'CP 72-2086',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Cloruro de potasio (0-0-60)',
+            'dosis': '2 qq/manzana',
+            'aplicacion': 'Aplicar en corona al inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No exceder la dosis para evitar quemaduras'
+        }
+    },
+    {
+        'cultivo': 'caña',
+        'variedad': 'CP 72-2086',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar en etapa de llenado de tallo',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar en horas de pleno sol'
+        }
+    },
+    # ============================================  HORTALIZAS  =================================================
+
     # === TOMATE ===
     {
         'cultivo': 'tomate',
         'variedad': 'híbrido',
         'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '18-18-21',
+            'dosis': '2 qq/manzana',
+            'aplicacion': 'Incorporar antes del trasplante',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Evitar exceso de humedad'
+        }
+    },
+    {
+        'cultivo': 'tomate',
+        'variedad': 'híbrido',
+        'suelo': 'volcánico',
         'clima': 'tropical',
         'etapa': 'trasplante',
         'recomendacion': {
-            'formula': '15-15-15 + Ca + Mg',
-            'dosis': '250 lb/manzana',
-            'aplicacion': 'Incorporar en hoyo de trasplante',
-            'fabricantes': ['Yara'],
-            'precauciones': 'Evitar contacto directo con raíces'
+            'formula': '15-15-15',
+            'dosis': '1.5 qq/manzana',
+            'aplicacion': 'En el fondo del hoyo de trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Cubrir raíz con suficiente suelo'
         }
     },
     {
         'cultivo': 'tomate',
         'variedad': 'híbrido',
         'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'floración',
+        'clima': 'templado',
+        'etapa': 'desarrollo',
         'recomendacion': {
-            'formula': '12-6-24 + 2MgO + micronutrientes',
-            'dosis': '3 aplicaciones foliares de 10 lb/manzana',
-            'aplicacion': 'Pulverización foliar cada 15 días',
-            'fabricantes': ['Haifa'],
-            'precauciones': 'Aplicar solo con humedad relativa >60%'
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.7 qq/manzana',
+            'aplicacion': '20 días después del trasplante, en corona',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
         }
     },
+    {
+        'cultivo': 'tomate',
+        'variedad': 'híbrido',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje al inicio de floración',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar a pleno sol'
+        }
+    },
+    {
+        'cultivo': 'tomate',
+        'variedad': 'híbrido',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar durante la fructificación',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Evitar excesos'
+        }
+    },
+
     # === CHILE ===
     {
         'cultivo': 'chile',
         'variedad': 'jalapeño',
-        'suelo': 'arenoso',
-        'clima': 'seco',
-        'etapa': 'producción',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'siembra',
         'recomendacion': {
-            'formula': '13-5-30 + Ca + B',
-            'dosis': '20 lb/manzana por riego fertirrigado',
-            'aplicacion': 'Aplicar cada 15 días vía riego por goteo',
-            'fabricantes': ['ICL'],
-            'precauciones': 'Regular pH del agua a 5.8-6.2'
+            'formula': '15-15-15',
+            'dosis': '1.5 qq/manzana',
+            'aplicacion': 'Incorporar al suelo antes de trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar exceso de sales'
         }
     },
+    {
+        'cultivo': 'chile',
+        'variedad': 'jalapeño',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '18-18-21',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar en base del hoyo',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Cubrir raíz completamente'
+        }
+    },
+    {
+        'cultivo': 'chile',
+        'variedad': 'jalapeño',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': '15 días después de trasplante',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Evitar contacto directo con tallo'
+        }
+    },
+    {
+        'cultivo': 'chile',
+        'variedad': 'jalapeño',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.3 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar a pleno sol'
+        }
+    },
+    {
+        'cultivo': 'chile',
+        'variedad': 'jalapeño',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.3 qq/manzana',
+            'aplicacion': 'Aplicar en inicio de cosecha',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Evitar excesos'
+        }
+    },
+
     # === CEBOLLA ===
     {
         'cultivo': 'cebolla',
         'variedad': 'amarilla',
-        'suelo': 'franco',
-        'clima': 'tropical',
+        'suelo': 'arenoso',
+        'clima': 'templado',
         'etapa': 'siembra',
         'recomendacion': {
-            'formula': '12-24-12 + Mg',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar al voleo y mezclar en la cama',
+            'formula': '12-24-12',
+            'dosis': '1.5 qq/manzana',
+            'aplicacion': 'Incorporar al fondo del surco',
             'fabricantes': ['Fertica'],
-            'precauciones': 'Evitar excesos para no inhibir germinación'
+            'precauciones': 'Evitar exceso de agua'
         }
     },
+    {
+        'cultivo': 'cebolla',
+        'variedad': 'amarilla',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '15-15-15',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Aplicar en base del hoyo',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Cubrir raíz con tierra'
+        }
+    },
+    {
+        'cultivo': 'cebolla',
+        'variedad': 'amarilla',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': '20 días después de trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'cebolla',
+        'variedad': 'amarilla',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.3 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje en inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar en sol intenso'
+        }
+    },
+    {
+        'cultivo': 'cebolla',
+        'variedad': 'amarilla',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Aplicar en desarrollo de bulbo',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No exceder dosis'
+        }
+    },
+
     # === LECHUGA ===
     {
         'cultivo': 'lechuga',
         'variedad': 'crispada',
         'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'trasplante',
+        'clima': 'húmedo',
+        'etapa': 'siembra',
         'recomendacion': {
-            'formula': '15-15-15 + Ca',
-            'dosis': '150 lb/manzana',
-            'aplicacion': 'En hoyo al trasplantar, mezclado con tierra',
-            'fabricantes': ['ICL'],
-            'precauciones': 'No sobredosificar, puede quemar raíces'
+            'formula': '10-30-10',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En fondo del surco',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar en exceso'
         }
     },
+    {
+        'cultivo': 'lechuga',
+        'variedad': 'crispada',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '12-24-12',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En hoyo de trasplante',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Cubrir bien raíces'
+        }
+    },
+    {
+        'cultivo': 'lechuga',
+        'variedad': 'crispada',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': '15 días después del trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'lechuga',
+        'variedad': 'crispada',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje en inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar bajo sol fuerte'
+        }
+    },
+    {
+        'cultivo': 'lechuga',
+        'variedad': 'crispada',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de magnesio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Durante el desarrollo de hojas',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar acumulación en hojas'
+        }
+    },
+
     # === ZANAHORIA ===
     {
         'cultivo': 'zanahoria',
         'variedad': 'nantesa',
-        'suelo': 'limo',
+        'suelo': 'arenoso',
         'clima': 'templado',
         'etapa': 'siembra',
         'recomendacion': {
-            'formula': '12-30-10',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Aplicar e incorporar antes de la siembra',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Realizar análisis de suelo previo'
+            'formula': '15-15-15',
+            'dosis': '1.5 qq/manzana',
+            'aplicacion': 'Aplicar al fondo del surco',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Evitar acumulación cerca de semillas'
         }
     },
+    {
+        'cultivo': 'zanahoria',
+        'variedad': 'nantesa',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '12-24-12',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En hoyo de trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Cubrir raíz con tierra'
+        }
+    },
+    {
+        'cultivo': 'zanahoria',
+        'variedad': 'nantesa',
+        'suelo': 'arenoso',
+        'clima': 'templado',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': '15 días después de la siembra',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar en hojas'
+        }
+    },
+    {
+        'cultivo': 'zanahoria',
+        'variedad': 'nantesa',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje en inicio de floración',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar bajo sol fuerte'
+        }
+    },
+    {
+        'cultivo': 'zanahoria',
+        'variedad': 'nantesa',
+        'suelo': 'arenoso',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Durante el crecimiento de raíces',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No exceder la dosis'
+        }
+    },
+
     # === ESPINACA ===
+    {
+        'cultivo': 'espinaca',
+        'variedad': 'viroflay',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'siembra',
+        'recomendacion': {
+            'formula': '10-30-10',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Incorporar al suelo antes de siembra',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar contacto directo con semilla'
+        }
+    },
     {
         'cultivo': 'espinaca',
         'variedad': 'viroflay',
@@ -221,73 +1087,302 @@ FERTILIZANTES = [
         'clima': 'templado',
         'etapa': 'trasplante',
         'recomendacion': {
-            'formula': '10-20-20 + B',
-            'dosis': '1.5 qq/manzana',
-            'aplicacion': 'Aplicar al trasplante, cubrir con tierra',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Mantener humedad sin encharcamiento'
+            'formula': '12-24-12',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En hoyo de trasplante',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Cubrir raíz'
         }
     },
+    {
+        'cultivo': 'espinaca',
+        'variedad': 'viroflay',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': '15 días después del trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'espinaca',
+        'variedad': 'viroflay',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar bajo sol fuerte'
+        }
+    },
+    {
+        'cultivo': 'espinaca',
+        'variedad': 'viroflay',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de magnesio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Durante la cosecha',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar acumulación en hojas'
+        }
+    },
+
     # === REPOLLO ===
     {
         'cultivo': 'repollo',
         'variedad': 'corazón de buey',
         'suelo': 'franco',
-        'clima': 'tropical',
-        'etapa': 'trasplante',
+        'clima': 'templado',
+        'etapa': 'siembra',
         'recomendacion': {
-            'formula': '15-15-15 + Mg',
-            'dosis': '2 qq/manzana',
-            'aplicacion': 'Mezclar en la cama de trasplante',
-            'fabricantes': ['ICL'],
-            'precauciones': 'Mantener riego moderado'
+            'formula': '15-15-15',
+            'dosis': '1.5 qq/manzana',
+            'aplicacion': 'Al fondo del surco antes de trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No exceder dosis'
         }
     },
+    {
+        'cultivo': 'repollo',
+        'variedad': 'corazón de buey',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '12-24-12',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'En hoyo de trasplante',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Cubrir bien raíz'
+        }
+    },
+    {
+        'cultivo': 'repollo',
+        'variedad': 'corazón de buey',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.7 qq/manzana',
+            'aplicacion': '20 días después del trasplante',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'repollo',
+        'variedad': 'corazón de buey',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.3 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje en inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar bajo sol intenso'
+        }
+    },
+    {
+        'cultivo': 'repollo',
+        'variedad': 'corazón de buey',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de magnesio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Durante el desarrollo de cabeza',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No exceder dosis'
+        }
+    },
+    
     # === AYOTE ===
     {
         'cultivo': 'ayote',
         'variedad': 'criollo',
-        'suelo': 'arenoso',
+        'suelo': 'volcánico',
         'clima': 'tropical',
         'etapa': 'siembra',
         'recomendacion': {
-            'formula': '12-24-12 + B',
+            'formula': '15-15-15',
             'dosis': '1 qq/manzana',
-            'aplicacion': 'Al voleo previo a la siembra',
+            'aplicacion': 'Incorporar al hoyo de siembra',
             'fabricantes': ['Fertica'],
             'precauciones': 'No aplicar en exceso'
         }
     },
+    {
+        'cultivo': 'ayote',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar 20 días después de la emergencia',
+            'fabricantes': ['Yara'],
+            'precauciones': 'Evitar contacto directo con hojas'
+        }
+    },
+    {
+        'cultivo': 'ayote',
+        'variedad': 'criollo',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Aplicar en el inicio de la floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar a pleno sol'
+        }
+    },
+    {
+        'cultivo': 'ayote',
+        'variedad': 'criollo',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Aplicar durante el llenado de fruto',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No exceder la dosis'
+        }
+    },
+
     # === GUISQUIL ===
     {
         'cultivo': 'guisquil',
         'variedad': 'verde',
         'suelo': 'volcánico',
         'clima': 'húmedo',
-        'etapa': 'desarrollo',
+        'etapa': 'siembra',
         'recomendacion': {
-            'formula': '10-30-10',
+            'formula': '15-15-15',
             'dosis': '1 qq/manzana',
-            'aplicacion': 'Aplicar a pie de planta cada 60 días',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Evitar contacto directo con tallo'
+            'aplicacion': 'Incorporar en el hoyo de siembra',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar en contacto con la semilla'
         }
     },
+    {
+        'cultivo': 'guisquil',
+        'variedad': 'verde',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': '20 días después de siembra',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No aplicar en hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'guisquil',
+        'variedad': 'verde',
+        'suelo': 'volcánico',
+        'clima': 'húmedo',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Rociar sobre follaje al inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar a pleno sol'
+        }
+    },
+    {
+        'cultivo': 'guisquil',
+        'variedad': 'verde',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Aplicar durante el llenado de fruto',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No exceder la dosis'
+        }
+    },
+
     # === PIPIAN ===
     {
         'cultivo': 'pipian',
         'variedad': 'criollo',
-        'suelo': 'arcilloso',
-        'clima': 'húmedo',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
         'etapa': 'siembra',
         'recomendacion': {
-            'formula': '10-30-10 + B',
-            'dosis': '1.5 qq/manzana',
-            'aplicacion': 'Incorporar antes de siembra',
+            'formula': '15-15-15',
+            'dosis': '1 qq/manzana',
+            'aplicacion': 'Incorporar al hoyo de siembra',
             'fabricantes': ['Fertica'],
-            'precauciones': 'Regar inmediatamente tras aplicación'
+            'precauciones': 'No aplicar en exceso'
         }
     },
+    {
+        'cultivo': 'pipian',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'Aplicar 20 días después de emergencia',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'pipian',
+        'variedad': 'criollo',
+        'suelo': 'volcánico',
+        'clima': 'tropical',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Aplicar en el inicio de floración',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar en sol fuerte'
+        }
+    },
+    {
+        'cultivo': 'pipian',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'tropical',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Durante llenado de fruto',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'No exceder dosis'
+        }
+    },
+    
     # === RABANO ===
     {
         'cultivo': 'rabano',
@@ -296,11 +1391,67 @@ FERTILIZANTES = [
         'clima': 'templado',
         'etapa': 'siembra',
         'recomendacion': {
-            'formula': '10-20-20',
-            'dosis': '1 qq/manzana',
-            'aplicacion': 'Incorporar superficialmente antes de siembra',
-            'fabricantes': ['Profertil'],
-            'precauciones': 'Evitar exceso de agua en primeras semanas'
+            'formula': '12-24-12',
+            'dosis': '0.7 qq/manzana',
+            'aplicacion': 'Aplicar al fondo del surco antes de la siembra',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar el exceso de fertilizante en la línea de semilla'
+        }
+    },
+    {
+        'cultivo': 'rabano',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'desarrollo',
+        'recomendacion': {
+            'formula': 'Urea (46-0-0)',
+            'dosis': '0.2 qq/manzana',
+            'aplicacion': 'Aplicar 10 días después de la emergencia',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar sobre hojas mojadas'
+        }
+    },
+    {
+        'cultivo': 'rabano',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'floración',
+        'recomendacion': {
+            'formula': 'Fertilizante foliar balanceado',
+            'dosis': '0.1 qq/manzana',
+            'aplicacion': 'Rociar sobre el follaje cuando empiecen a formarse las flores',
+            'fabricantes': ['Yara'],
+            'precauciones': 'No aplicar bajo sol fuerte'
+        }
+    },
+    {
+        'cultivo': 'rabano',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'húmedo',
+        'etapa': 'producción',
+        'recomendacion': {
+            'formula': 'Sulfato de potasio',
+            'dosis': '0.1 qq/manzana',
+            'aplicacion': 'Aplicar en etapa de engrosamiento de raíz',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Evitar acumulación en hojas'
+        }
+    },
+    {
+        'cultivo': 'rabano',
+        'variedad': 'criollo',
+        'suelo': 'franco',
+        'clima': 'templado',
+        'etapa': 'trasplante',
+        'recomendacion': {
+            'formula': '10-30-10',
+            'dosis': '0.5 qq/manzana',
+            'aplicacion': 'En el hoyo de trasplante si se usa almácigo',
+            'fabricantes': ['Fertica'],
+            'precauciones': 'Cubrir raíces, regar suavemente'
         }
     }
 ]
