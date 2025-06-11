@@ -37,13 +37,12 @@
     <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
     <!-- Navbar -->
-    <nav
-        class="relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-10 backdrop-blur-md shadow-md rounded-b-2xl">
-        <h1 class="text-2xl md:text-3xl font-bold text-green-300">
-            🌿 ¡Hola, {{ username }}!
+    <nav class="relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-5 backdrop-blur-lg shadow-md rounded-b-3xl">
+        <h1 class="text-3xl font-bold text-green-200 drop-shadow">
+            <span class="inline-block mr-2 animate-bounce">🌿</span>¡Hola, {{ username }}!
         </h1>
         <button id="logoutBtn"
-            class="px-4 py-2 text-white font-semibold rounded-lg transition bg-green-500 hover:bg-green-600 bg-opacity-80 backdrop-blur-sm"
+            class="px-4 py-2 text-white font-semibold rounded-xl transition bg-gradient-to-tr from-green-400 to-emerald-700 hover:from-emerald-600 hover:to-green-400 shadow-lg"
             aria-label="Cerrar sesión">
             🔒 Cerrar sesión
         </button>

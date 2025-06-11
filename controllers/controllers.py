@@ -220,7 +220,8 @@ def fertilizante():
         suelos=suelos,
         climas=climas,
         etapas=etapas,
-        variedades=variedades
+        variedades=variedades,
+        username=session['username']
     )
 
 @main_blueprint.route('/sintomas/<cultivo>')
@@ -258,3 +259,8 @@ def diagnostico():
         cultivos=cultivos,
         sintomas_lista=sintomas_lista
     )
+
+@main_blueprint.route('/get_variedades/<cultivo>')
+def get_variedades(cultivo):
+    variedades_dict = asesor.obtener_opciones('variedades_cultivo')
+    return jsonify(variedades_dict.get(cultivo, []))

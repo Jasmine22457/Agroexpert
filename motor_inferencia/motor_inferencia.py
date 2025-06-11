@@ -10,7 +10,7 @@ class AsesorAgricola:
     def __init__(self):
         self.parametros = PARAMETROS
 
-    # === FERTILIZACIÓN ===
+  # === FERTILIZACIÓN ===
     def recomendar_fertilizacion(self, cultivo: str, suelo: str, clima: str,
                                  variedad: Optional[str] = None, etapa: Optional[str] = None) -> Dict:
         recomendaciones = []
@@ -40,6 +40,30 @@ class AsesorAgricola:
             'recomendaciones': recomendaciones,
             'advertencias': self._generar_advertencias(cultivo, suelo)
         }
+
+    def _sugerir_alternativas(self, cultivo: str, suelo: str, clima: str) -> List:
+        alternativas = []
+        for regla in FERTILIZANTES:
+            if regla['cultivo'] == cultivo and regla['clima'] == clima:
+                alternativas.append({
+                    'suelo_alternativo': regla['suelo'],
+                    'recomendacion': regla['recomendacion']['formula']
+                })
+        for regla in FERTILIZANTES:
+            if regla['cultivo'] == cultivo and regla['suelo'] == suelo:
+                alternativas.append({
+                    'clima_alternativo': regla['clima'],
+                    'recomendacion': regla['recomendacion']['formula']
+                })
+        return alternativas[:3]
+
+    def _generar_advertencias(self, cultivo: str, suelo: str) -> List:
+        advertencias = []
+        if cultivo == 'maiz' and suelo == 'arenoso':
+            advertencias.append('Requiere fertilización fraccionada por lixiviación potencial')
+        if cultivo == 'tomate' and suelo == 'arcilloso':
+            advertencias.append('Aumentar dosis de potasio en un 20% para este tipo de suelo')
+        return advertencias
 
     def _sugerir_alternativas(self, cultivo: str, suelo: str, clima: str) -> List:
         alternativas = []
