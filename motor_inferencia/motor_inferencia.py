@@ -2,7 +2,9 @@
 
 from typing import List, Dict, Optional
 from base_conocimiento.base_conocimiento import FERTILIZANTES, PARAMETROS
-from base_conocimiento.base_conomiento_plagas import PLAGAS
+from base_conocimiento.base_conocimiento_plagas import PLAGAS
+from base_conocimiento.base_conocimiento_acuaponia import PECES_ACUAPONIA, HORTALIZAS_ACUAPONIA, COMBINACIONES_ACUAPONIA
+
 
 
 
@@ -101,7 +103,29 @@ class AsesorAgricola:
                     })
                     seen.add(t['producto'])
         return quimicos
+    
+    #========= ACUAPONIA =================
+    
+    def obtener_opciones_acuaponia(self):
+        """Devuelve lista de peces y hortalizas acuapónicas disponibles"""
+        peces = [p['tipo'] for p in PECES_ACUAPONIA]
+        hortalizas = [h['tipo'] for h in HORTALIZAS_ACUAPONIA]
+        return {'peces': peces, 'hortalizas': hortalizas}
 
+    def recomendar_acuaponia(self, pez, hortaliza):
+        """Devuelve recomendaciones según pez y hortaliza elegidos"""
+        combinacion = next(
+            (c for c in COMBINACIONES_ACUAPONIA if c['pez'] == pez and c['hortaliza'] == hortaliza),
+            None
+        )
+        pez_info = next((p for p in PECES_ACUAPONIA if p['tipo'] == pez), None)
+        hortaliza_info = next((h for h in HORTALIZAS_ACUAPONIA if h['tipo'] == hortaliza), None)
+        return {
+            'pez': pez_info,
+            'hortaliza': hortaliza_info,
+            'combinacion': combinacion['recomendaciones'] if combinacion else []
+        }
+    
     # === INTERFAZ ===
     def obtener_opciones(self, tipo: str) -> List:
         if tipo in self.parametros:

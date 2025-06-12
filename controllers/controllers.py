@@ -1,7 +1,8 @@
 from flask import Blueprint, render_template, request, redirect, session, url_for, flash, jsonify,make_response
 from models.models import crear_usuario, verificar_usuario, guardar_consulta, correo_existe, verificar_codigo, get_connection
 from motor_inferencia.motor_inferencia import AsesorAgricola
-from base_conocimiento.base_conomiento_plagas import obtener_sintomas_por_cultivo
+from base_conocimiento.base_conocimiento_plagas import obtener_sintomas_por_cultivo
+from flask import Blueprint, render_template, request, session, redirect, url_for
 from werkzeug.security import check_password_hash
 from utils import nocache
 import smtplib
@@ -277,6 +278,31 @@ def diagnostico():
 def get_variedades(cultivo):
     variedades_dict = asesor.obtener_opciones('variedades_cultivo')
     return jsonify(variedades_dict.get(cultivo, []))
+
+@main_blueprint.route('/acuaponia', methods=['GET', 'POST'])
+@nocache
+def acuaponia():
+    if 'usuario_id' not in session:
+        return redirect(url_for('main.index'))
+    
+    opciones = asesor.obtener_opciones_acuaponia()
+    resultado = None
+    pez = ''
+    hortaliza = ''
+    
+    if request.method == 'POST':
+        pez = request.form['pez']
+        hortaliza = request.form['hortaliza']
+        resultado = asesor.recomendar_acuaponia(pez, hortaliza)
+    
+    return render_template(
+        'acuaponia.html',
+        opciones=opciones,
+        resultado=resultado,
+        pez=pez,
+        hortaliza=hortaliza,
+        username=session.get('username', 'Usuario')
+    )
 
 
 @main_blueprint.route('/fertilizante/pdf', methods=['POST'])
