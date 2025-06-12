@@ -4,90 +4,57 @@ from typing import List, Dict, Optional
 from base_conocimiento.base_conocimiento import FERTILIZANTES, PARAMETROS
 from base_conocimiento.base_conomiento_plagas import PLAGAS
 
+
+
 class AsesorAgricola:
     """Sistema experto para recomendaciones agrícolas en El Salvador"""
 
     def __init__(self):
         self.parametros = PARAMETROS
 
-  # === FERTILIZACIÓN ===
-    def recomendar_fertilizacion(self, cultivo: str, suelo: str, clima: str,
-                                 variedad: Optional[str] = None, etapa: Optional[str] = None) -> Dict:
-        recomendaciones = []
+    def obtener_opciones(self, tipo):
+        """
+        Devuelve opciones para los selectores en la interfaz
+        """
+        if tipo == 'cultivos':
+            return self.parametros['cultivos']
+        elif tipo == 'suelos':
+            return self.parametros['suelos']
+        elif tipo == 'climas':
+            return self.parametros['climas']
+        elif tipo == 'etapas':
+            return self.parametros['etapas']
+        elif tipo == 'variedades_cultivo':
+            return self.parametros['variedades']
+     
+        return []
+
+    def recomendar_fertilizacion(self, cultivo, suelo, clima, variedad=None, etapa=None):
+       
         for regla in FERTILIZANTES:
-            match = (
+            if (
                 regla['cultivo'] == cultivo and
                 regla['suelo'] == suelo and
                 regla['clima'] == clima and
-                (variedad is None or regla.get('variedad') == variedad) and
-                (etapa is None or regla.get('etapa') == etapa)
-            )
-            if match:
-                rec = regla['recomendacion'].copy()
-                rec['condiciones'] = {
-                    'suelo': suelo,
-                    'clima': clima,
-                    'variedad': variedad,
-                    'etapa': etapa
+                (not variedad or regla['variedad'] == variedad) and
+                (not etapa or regla['etapa'] == etapa)
+            ):
+                # Copia la recomendación y añade las condiciones
+                recomendacion = regla['recomendacion'].copy()
+                recomendacion['condiciones'] = {
+                    'suelo': regla['suelo'],
+                    'clima': regla['clima'],
+                    'variedad': regla['variedad'],
+                    'etapa': regla['etapa']
                 }
-                recomendaciones.append(rec)
-        if not recomendaciones:
-            return {
-                'error': 'No se encontraron recomendaciones',
-                'sugerencias': self._sugerir_alternativas(cultivo, suelo, clima)
-            }
+                return {'recomendaciones': recomendacion}
+        # Si no se encuentra, retorna sugerencias
         return {
-            'recomendaciones': recomendaciones,
-            'advertencias': self._generar_advertencias(cultivo, suelo)
+            'sugerencias': [
+                "No hay una recomendación técnica registrada para esos parámetros. "
+                "Prueba otra combinación de variedad, clima o etapa."
+            ]
         }
-
-    def _sugerir_alternativas(self, cultivo: str, suelo: str, clima: str) -> List:
-        alternativas = []
-        for regla in FERTILIZANTES:
-            if regla['cultivo'] == cultivo and regla['clima'] == clima:
-                alternativas.append({
-                    'suelo_alternativo': regla['suelo'],
-                    'recomendacion': regla['recomendacion']['formula']
-                })
-        for regla in FERTILIZANTES:
-            if regla['cultivo'] == cultivo and regla['suelo'] == suelo:
-                alternativas.append({
-                    'clima_alternativo': regla['clima'],
-                    'recomendacion': regla['recomendacion']['formula']
-                })
-        return alternativas[:3]
-
-    def _generar_advertencias(self, cultivo: str, suelo: str) -> List:
-        advertencias = []
-        if cultivo == 'maiz' and suelo == 'arenoso':
-            advertencias.append('Requiere fertilización fraccionada por lixiviación potencial')
-        if cultivo == 'tomate' and suelo == 'arcilloso':
-            advertencias.append('Aumentar dosis de potasio en un 20% para este tipo de suelo')
-        return advertencias
-
-    def _sugerir_alternativas(self, cultivo: str, suelo: str, clima: str) -> List:
-        alternativas = []
-        for regla in FERTILIZANTES:
-            if regla['cultivo'] == cultivo and regla['clima'] == clima:
-                alternativas.append({
-                    'suelo_alternativo': regla['suelo'],
-                    'recomendacion': regla['recomendacion']['formula']
-                })
-        for regla in FERTILIZANTES:
-            if regla['cultivo'] == cultivo and regla['suelo'] == suelo:
-                alternativas.append({
-                    'clima_alternativo': regla['clima'],
-                    'recomendacion': regla['recomendacion']['formula']
-                })
-        return alternativas[:3]
-
-    def _generar_advertencias(self, cultivo: str, suelo: str) -> List:
-        advertencias = []
-        if cultivo == 'maiz' and suelo == 'arenoso':
-            advertencias.append('Requiere fertilización fraccionada por lixiviación potencial')
-        if cultivo == 'tomate' and suelo == 'arcilloso':
-            advertencias.append('Aumentar dosis de potasio en un 20% para este tipo de suelo')
-        return advertencias
 
     # === MANEJO DE PLAGAS ===
     def diagnosticar_plaga(self, cultivo: str, sintomas: List[str]) -> Dict:

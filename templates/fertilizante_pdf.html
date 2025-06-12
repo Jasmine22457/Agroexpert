@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recomendación de Fertilización</title>
+    <style>
+        /* Estilos optimizados para una sola página */
+        :root {
+            --primary-color: #2E7D32;
+            --secondary-color: #388E3C;
+            --accent-color: #4CAF50;
+            --warning-color: #D32F2F;
+            --text-color: #333;
+            --light-bg: #F8F9FA;
+            --warning-bg: #FFEBEE;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 1.5em;
+            color: var(--text-color);
+            line-height: 1.5;
+            font-size: 14px;
+        }
+        
+        .page-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1em;
+            padding-bottom: 0.5em;
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 1.6em;
+            font-weight: 600;
+        }
+        
+        .date {
+            color: #666;
+            font-size: 0.9em;
+        }
+        
+        .card {
+            background-color: var(--light-bg);
+            border-left: 4px solid var(--accent-color);
+            padding: 1em;
+            border-radius: 0 4px 4px 0;
+            margin-bottom: 1em;
+            page-break-inside: avoid;
+        }
+        
+        .warning-card {
+            border-left-color: var(--warning-color);
+            background-color: var(--warning-bg);
+        }
+        
+        h2 {
+            color: var(--secondary-color);
+            font-size: 1.3em;
+            margin: 0.5em 0;
+        }
+        
+        h3 {
+            color: var(--accent-color);
+            font-size: 1.1em;
+            margin: 0.5em 0;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: max-content auto;
+            gap: 0.5em 1em;
+            margin: 0.5em 0;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+        
+        .formula-highlight {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #1B5E20;
+            margin: 0.5em 0;
+        }
+        
+        ul {
+            margin: 0.5em 0;
+            padding-left: 1.5em;
+        }
+        
+        li {
+            margin-bottom: 0.3em;
+        }
+        
+        .conditions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 0.5em;
+            margin-top: 0.5em;
+        }
+        
+        .condition-item {
+            background-color: #E8F5E9;
+            padding: 0.5em;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        
+        .condition-label {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 0.9em;
+        }
+        
+        @media print {
+            body {
+                padding: 0.5em;
+                font-size: 12px;
+            }
+            
+            .page-container {
+                max-width: 100%;
+            }
+            
+            .card {
+                margin-bottom: 0.8em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="page-container">
+        <div class="header">
+            <h1>Recomendación de Fertilización</h1>
+        </div>
+        
+        <div class="card" style="margin-bottom: 1.5em;">
+            <div class="info-grid">
+                <span class="info-label">Usuario:</span>
+                <span>{{ username|capitalize }}</span>
+            </div>
+        </div>
+
+        {% if resultado %}
+        <div class="card">
+            <h2>Recomendación Técnica</h2>
+            
+            {% if resultado.formula %}
+            <div class="info-grid">
+                <span class="info-label">Fórmula:</span>
+                <span class="formula-highlight">{{ resultado.formula }}</span>
+            </div>
+            {% endif %}
+            
+            {% if resultado.dosis %}
+            <div class="info-grid">
+                <span class="info-label">Dosis:</span>
+                <span>{{ resultado.dosis }}</span>
+            </div>
+            {% endif %}
+            
+            {% if resultado.aplicacion %}
+            <div class="info-grid">
+                <span class="info-label">Aplicación:</span>
+                <span>{{ resultado.aplicacion }}</span>
+            </div>
+            {% endif %}
+            
+            {% if resultado.fabricantes %}
+            <div class="info-grid">
+                <span class="info-label">Fabricantes:</span>
+                <span>{{ resultado.fabricantes|join(', ') }}</span>
+            </div>
+            {% endif %}
+            
+            {% if resultado.precauciones %}
+            <div style="margin-top: 1em;">
+                <h3>Precauciones</h3>
+                <p>{{ resultado.precauciones }}</p>
+            </div>
+            {% endif %}
+            
+            {% if resultado.condiciones %}
+            <div style="margin-top: 1em;">
+                <h3>Condiciones Consideradas</h3>
+                <div class="conditions-grid">
+                    {% if resultado.condiciones.suelo %}
+                    <div class="condition-item">
+                        <div class="condition-label">Tipo de Suelo</div>
+                        <div>{{ resultado.condiciones.suelo }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resultado.condiciones.clima %}
+                    <div class="condition-item">
+                        <div class="condition-label">Clima</div>
+                        <div>{{ resultado.condiciones.clima }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resultado.condiciones.variedad %}
+                    <div class="condition-item">
+                        <div class="condition-label">Variedad</div>
+                        <div>{{ resultado.condiciones.variedad }}</div>
+                    </div>
+                    {% endif %}
+                    
+                    {% if resultado.condiciones.etapa %}
+                    <div class="condition-item">
+                        <div class="condition-label">Etapa</div>
+                        <div>{{ resultado.condiciones.etapa }}</div>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            {% endif %}
+        </div>
+        {% endif %}
+        
+        {% if sugerencias %}
+        <div class="card">
+            <h2>Recomendaciones Adicionales</h2>
+            <ul>
+                {% for s in sugerencias %}
+                <li>{{ s }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        
+        {% if advertencias %}
+        <div class="card warning-card">
+            <h2>Advertencias</h2>
+            <ul>
+                {% for adv in advertencias %}
+                <li>{{ adv }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pdfBtn = document.getElementById('pdfBtn');
+            
+            if (pdfBtn) {
+                pdfBtn.addEventListener('click', async function() {
+                    try {
+                        const response = await fetch('/fertilizante/pdf', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                parametros: window.parametrosConsulta,
+                                resultado: {{ resultado|tojson }},
+                                advertencias: {{ advertencias|tojson }},
+                                sugerencias: {{ sugerencias|tojson }}
+                            })
+                        });
+                        
+                        if (!response.ok) throw new Error('Error al generar PDF');
+                        
+                        const blob = await response.blob();
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'recomendacion_fertilizante.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        setTimeout(() => {
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        }, 100);
+                    } catch (error) {
+                        console.error('Error:', error);
+                        alert(error.message);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

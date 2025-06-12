@@ -7,7 +7,6 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
     <meta http-equiv="Pragma" content="no-cache" />
     <meta http-equiv="Expires" content="0" />
-
     <title>Recomendador de Fertilizantes</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
@@ -34,12 +33,8 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        .result-row {
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .result-row:last-child {
-            border-bottom: none;
+        .hidden {
+            display: none !important;
         }
     </style>
 </head>
@@ -47,8 +42,8 @@
 <body class="hero-bg text-white relative">
     <div class="absolute inset-0 bg-black bg-opacity-70 z-0"></div>
 
-    <!-- Navbar -->
-    <nav class="relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-5 backdrop-blur-lg shadow-md rounded-b-3xl">
+    <nav
+        class="relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-5 backdrop-blur-lg shadow-md rounded-b-3xl">
         <h1 class="text-3xl font-bold text-green-200 drop-shadow">
             <span class="inline-block mr-2 animate-bounce">🌿</span>¡Hola, {{ username }}!
         </h1>
@@ -59,12 +54,10 @@
         </button>
     </nav>
 
-    <!-- Contenido principal -->
     <main class="relative z-10 px-6 py-12">
         <section class="max-w-4xl mx-auto bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 text-white">
             <h2 class="text-2xl font-bold mb-6 text-green-100">Recomendador de Fertilizantes</h2>
-
-            <form method="post" class="grid gap-4">
+            <form method="post" class="grid gap-4" id="formularioFertilizacion">
                 <!-- Cultivo -->
                 <label class="block">
                     <span class="text-green-200">Cultivo:</span>
@@ -75,7 +68,6 @@
                         {% endfor %}
                     </select>
                 </label>
-
                 <!-- Suelo -->
                 <label class="block">
                     <span class="text-green-200">Suelo:</span>
@@ -86,7 +78,6 @@
                         {% endfor %}
                     </select>
                 </label>
-
                 <!-- Clima -->
                 <label class="block">
                     <span class="text-green-200">Clima:</span>
@@ -97,7 +88,6 @@
                         {% endfor %}
                     </select>
                 </label>
-
                 <!-- Etapa del Cultivo -->
                 <label class="block">
                     <span class="text-green-200">Etapa del Cultivo:</span>
@@ -108,7 +98,6 @@
                         {% endfor %}
                     </select>
                 </label>
-
                 <!-- Variedad -->
                 <label class="block">
                     <span class="text-green-200">Variedad:</span>
@@ -120,16 +109,12 @@
                         {% endfor %}
                     </select>
                 </label>
-
                 <div class="flex gap-4">
                     <button type="submit"
                         class="mt-4 px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded flex-1">
                         Recomendar
                     </button>
-                    <button type="button" id="limpiarBtn"
-                        class="mt-4 px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded flex-1">
-                        Limpiar resultados
-                    </button>
+                 
                 </div>
             </form>
 
@@ -143,58 +128,33 @@
                     </svg>
                     Recomendación de Fertilización
                 </h3>
-
+                <!-- Resultado -->
                 {% if resultado is mapping %}
-                <!-- NUEVO DISEÑO DE RESULTADO BONITO -->
                 <div
                     class="space-y-4 bg-gradient-to-br from-green-900 to-green-700 rounded-xl shadow-lg p-6 border border-green-300">
                     <h4 class="text-2xl font-bold text-white mb-4 flex items-center gap-2">
                         🌾 Recomendación Personalizada
                     </h4>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                        <!-- Fórmula -->
+                    <ul class="list-disc pl-6 space-y-3 text-lg text-white">
                         {% if resultado.formula %}
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 border-l-4 border-green-300">
-                            <p class="text-sm text-green-200 font-semibold uppercase">Fórmula</p>
-                            <p class="text-xl text-white mt-1 font-bold">{{ resultado.formula }}</p>
-                        </div>
+                        <li><span class="font-semibold text-green-200">Fórmula:</span> {{ resultado.formula }}.</li>
                         {% endif %}
-
-                        <!-- Dosis -->
                         {% if resultado.dosis %}
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 border-l-4 border-green-300">
-                            <p class="text-sm text-green-200 font-semibold uppercase">Dosis</p>
-                            <p class="text-xl text-white mt-1 font-bold">{{ resultado.dosis }}</p>
-                        </div>
+                        <li><span class="font-semibold text-green-200">Dosis:</span> {{ resultado.dosis }}.</li>
                         {% endif %}
-
-                        <!-- Aplicación -->
                         {% if resultado.aplicacion %}
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 border-l-4 border-green-300 md:col-span-2">
-                            <p class="text-sm text-green-200 font-semibold uppercase">Método de Aplicación</p>
-                            <p class="text-white mt-1">{{ resultado.aplicacion }}</p>
-                        </div>
+                        <li><span class="font-semibold text-green-200">Aplicación:</span> {{ resultado.aplicacion }}.
+                        </li>
                         {% endif %}
-
-                        <!-- Fabricantes -->
                         {% if resultado.fabricantes %}
-                        <div class="bg-white bg-opacity-10 rounded-lg p-4 border-l-4 border-green-300">
-                            <p class="text-sm text-green-200 font-semibold uppercase">Fabricantes</p>
-                            <p class="text-white mt-1">{{ resultado.fabricantes|join(', ') }}</p>
-                        </div>
+                        <li><span class="font-semibold text-green-200">Fabricantes:</span> {{
+                            resultado.fabricantes|join(', ') }}.</li>
                         {% endif %}
-
-                        <!-- Precauciones -->
                         {% if resultado.precauciones %}
-                        <div class="bg-yellow-800 bg-opacity-20 rounded-lg p-4 border-l-4 border-yellow-400">
-                            <p class="text-sm text-yellow-300 font-semibold uppercase">Precauciones</p>
-                            <p class="text-yellow-100 mt-1">{{ resultado.precauciones }}</p>
-                        </div>
+                        <li><span class="font-semibold text-yellow-300">Precauciones:</span> {{ resultado.precauciones
+                            }}.</li>
                         {% endif %}
-                    </div>
-
-                    <!-- Condiciones -->
+                    </ul>
                     {% if resultado.condiciones %}
                     <div class="mt-6 bg-white bg-opacity-5 p-4 rounded-lg border border-green-500">
                         <p class="text-sm text-green-200 font-semibold uppercase mb-2">Condiciones Aplicadas</p>
@@ -215,22 +175,31 @@
                     </div>
                     {% endif %}
                 </div>
-             
-
-                <!-- Caso cuando resultado es un string simple -->
-                <div class="bg-green-900 bg-opacity-30 rounded-lg p-4">
-                    <p class="text-lg">{{ resultado }}</p>
-                </div>
                 {% else %}
-                <!-- Caso cuando resultado es una lista -->
                 <div class="bg-green-900 bg-opacity-30 rounded-lg p-4">
+                    {% if resultado is string %}
+                    <p class="text-lg">{{ resultado }}</p>
+                    {% else %}
                     <ul class="list-disc pl-5 space-y-2">
                         {% for item in resultado %}
                         <li>{{ item }}</li>
                         {% endfor %}
                     </ul>
+                    {% endif %}
                 </div>
                 {% endif %}
+            </div>
+            <div class="mt-4 flex justify-end gap-4">
+                <button id="limpiarBtn"
+                    class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded shadow transition">
+                    Limpiar resultados
+                </button>
+                <div id="pdfBtnContainer">
+                    <button id="pdfBtn"
+                        class="px-4 py-2 bg-green-700 hover:bg-green-900 text-white font-semibold rounded shadow transition">
+                        Imprimir/Descargar PDF
+                    </button>
+                </div>
             </div>
             {% endif %}
 
@@ -279,24 +248,29 @@
         </section>
     </main>
 
-    <!-- Scripts -->
     <script>
-        document.getElementById('logoutBtn')?.addEventListener('click', () => {
-            window.location.href = '/logout';
-        });
-
-        if (window.history && window.history.pushState) {
-            window.history.pushState(null, null, window.location.href);
-            window.onpopstate = function () {
-                window.location.href = '/logout';
-            };
-        }
-
+        window.parametrosConsulta = {{ parametros_form | tojson | safe }};
         document.addEventListener("DOMContentLoaded", function () {
-            const cultivoSelect = document.querySelector("select[name='cultivo']");
-            const variedadSelect = document.getElementById("variedad");
+            // Botón cerrar sesión
+            document.getElementById('logoutBtn')?.addEventListener('click', () => {
+                window.location.href = '/logout';
+            });
 
-            cultivoSelect.addEventListener("change", function () {
+            // Forzar logout si retrocede
+            if (window.history && window.history.pushState) {
+                window.history.pushState(null, null, window.location.href);
+                window.onpopstate = function () {
+                    window.location.href = '/logout';
+                };
+            }
+
+            const form = document.getElementById("formularioFertilizacion");
+            const variedadSelect = document.getElementById("variedad");
+            const limpiarBtn = document.getElementById("limpiarBtn");
+
+            // Cambio de cultivo para cargar variedades dinámicas
+            const cultivoSelect = document.querySelector("select[name='cultivo']");
+            cultivoSelect?.addEventListener("change", function () {
                 const cultivoSeleccionado = this.value;
                 fetch(`/get_variedades/${cultivoSeleccionado}`)
                     .then(response => response.json())
@@ -314,19 +288,78 @@
                     });
             });
 
-            // Función para limpiar resultados
-            document.getElementById('limpiarBtn')?.addEventListener('click', function () {
-                const resultadoContainer = document.getElementById('resultadoContainer');
-                const sugerenciasContainer = document.getElementById('sugerenciasContainer');
-                const advertenciasContainer = document.getElementById('advertenciasContainer');
+            // Mostrar u ocultar el botón limpiar dependiendo del resultado
+            {% if resultado %}
+            limpiarBtn.classList.remove('hidden');
+            {% else %}
+            limpiarBtn.classList.add('hidden');
+            {% endif %}
 
-                if (resultadoContainer) resultadoContainer.remove();
-                if (sugerenciasContainer) sugerenciasContainer.remove();
-                if (advertenciasContainer) advertenciasContainer.remove();
+            // Si hay resultado, ocultar el formulario y mostrar resultados
+            {% if resultado %}
+            form.classList.add('hidden');
+            document.getElementById('resultadoContainer')?.classList.remove('hidden');
+            document.getElementById('pdfBtnContainer')?.classList.remove('hidden');
+            document.getElementById('sugerenciasContainer')?.classList.remove('hidden');
+            document.getElementById('advertenciasContainer')?.classList.remove('hidden');
+            {% endif %}
+
+            // Al limpiar, mostrar formulario, ocultar resultados y botón limpiar
+            limpiarBtn?.addEventListener('click', function () {
+                document.getElementById('resultadoContainer')?.classList.add('hidden');
+                document.getElementById('sugerenciasContainer')?.classList.add('hidden');
+                document.getElementById('advertenciasContainer')?.classList.add('hidden');
+                document.getElementById('pdfBtnContainer')?.classList.add('hidden');
+                limpiarBtn.classList.add('hidden'); // OCULTAR el botón
+                form.reset();
+                form.classList.remove('hidden');
+                if (variedadSelect) {
+                    variedadSelect.innerHTML = '<option value="" selected disabled>-- Seleccionar --</option>';
+                }
+            });
+
+            // PDF descarga
+            const pdfBtn = document.getElementById('pdfBtn');
+            if (pdfBtn) {
+                pdfBtn.addEventListener('click', function () {
+                    const params = window.parametrosConsulta || {};
+                    const resultado = {{ resultado| tojson | safe
+                }};
+            const advertencias = {{ advertencias| tojson | safe
+        }};
+        const sugerencias = {{ sugerencias| tojson | safe }};
+
+        fetch('/fertilizante/pdf', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                parametros: params,
+                resultado: resultado,
+                advertencias: advertencias,
+                sugerencias: sugerencias
+            })
+        })
+            .then(response => {
+                if (response.ok) return response.blob();
+                throw new Error('No se pudo generar el PDF');
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'recomendacion_fertilizante.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(err => {
+                alert('Error al generar el PDF: ' + err);
             });
         });
+    }
+});
     </script>
-
 </body>
 
 </html>

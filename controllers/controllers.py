@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, session, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, session, url_for, flash, jsonify,make_response
 from models.models import crear_usuario, verificar_usuario, guardar_consulta, correo_existe, verificar_codigo, get_connection
 from motor_inferencia.motor_inferencia import AsesorAgricola
 from base_conocimiento.base_conomiento_plagas import obtener_sintomas_por_cultivo
@@ -7,10 +7,9 @@ from utils import nocache
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from flask import jsonify
-from models.models import get_connection
 import secrets
 import string
+from weasyprint import HTML
 
 
 
@@ -185,6 +184,13 @@ def fertilizante():
     variedades_dict = asesor.obtener_opciones('variedades_cultivo')
     variedades = []
 
+    # Inicializa los parámetros vacíos por defecto
+    cultivo = ''
+    suelo = ''
+    clima = ''
+    etapa = ''
+    variedad = ''
+
     if request.method == 'POST':
         cultivo = request.form['cultivo']
         suelo = request.form['suelo']
@@ -211,19 +217,26 @@ def fertilizante():
         if cultivo:
             variedades = variedades_dict.get(cultivo, [])
 
+    # Pasa SIEMPRE los parámetros al template
     return render_template(
-        'fertilizante.html',
-        resultado=resultado,
-        advertencias=advertencias,
-        sugerencias=sugerencias,
-        cultivos=cultivos,
-        suelos=suelos,
-        climas=climas,
-        etapas=etapas,
-        variedades=variedades,
-        username=session['username']
-    )
-
+    'fertilizante.html',
+    resultado=resultado,
+    advertencias=advertencias,
+    sugerencias=sugerencias,
+    cultivos=cultivos,
+    suelos=suelos,
+    climas=climas,
+    etapas=etapas,
+    variedades=variedades,
+    username=session['username'],
+    parametros_form={
+        "cultivo": cultivo or '',
+        "suelo": suelo or '',
+        "clima": clima or '',
+        "etapa": etapa or '',
+        "variedad": variedad or ''
+    }
+)
 @main_blueprint.route('/sintomas/<cultivo>')
 def sintomas_por_cultivo(cultivo):
     sintomas = obtener_sintomas_por_cultivo(cultivo)
@@ -264,3 +277,28 @@ def diagnostico():
 def get_variedades(cultivo):
     variedades_dict = asesor.obtener_opciones('variedades_cultivo')
     return jsonify(variedades_dict.get(cultivo, []))
+
+
+@main_blueprint.route('/fertilizante/pdf', methods=['POST'])
+def generar_pdf_fertilizante():
+    try:
+        data = request.json
+        # OBTEN EL NOMBRE DE USUARIO DE LA SESIÓN (o pásalo desde el frontend)
+        username = session.get('username', 'Usuario')
+        html = render_template(
+            'fertilizante_pdf.html',
+            parametros=data.get('parametros', {}),
+            resultado=data['resultado'],
+            advertencias=data.get('advertencias', []),
+            sugerencias=data.get('sugerencias', []),
+            username=username    # <-- Agregado aquí
+        )
+        pdf = HTML(string=html).write_pdf()
+        response = make_response(pdf)
+        response.headers['Content-Type'] = 'application/pdf'
+        response.headers['Content-Disposition'] = 'attachment; filename=recomendacion_fertilizante.pdf'
+        return response
+    except Exception as e:
+        print("ERROR AL GENERAR PDF:", e)
+        return jsonify({'error': str(e)}), 500
+
