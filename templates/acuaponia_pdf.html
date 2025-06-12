@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Combinación Acuapónica PDF</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; color: #194d31; background: #f9fffa; margin: 0; }
+        h2, h3, h4 { color: #157447; }
+        .container { max-width: 700px; margin: 2rem auto; background: #e7fce6; border-radius: 16px; box-shadow: 0 0 10px #bbf7d0; padding: 2rem;}
+        .section { border: 1px solid #b6e8c9; border-radius: 8px; padding: 1rem 1.5rem; margin-bottom: 2rem; background: #fff; }
+        .item { margin-bottom: 8px;}
+        ul { margin: 0 0 0 1.3em; }
+        .label { font-weight: bold; color: #157447;}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Combinación Recomendada de Acuaponía</h2>
+        {% if resultado %}
+        <div class="section">
+            <h3>🐟 Parámetros del Pez: {{ resultado.pez.tipo|capitalize }}</h3>
+            <ul>
+                {% for k, v in resultado.pez.parametros.items() %}
+                <li><b>{{ k|capitalize }}:</b> {{ v }}</li>
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for r in resultado.pez.recomendaciones %}
+                <li>{{ r }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="section">
+            <h3>🥬 Parámetros de la Hortaliza: {{ resultado.hortaliza.tipo|capitalize }}</h3>
+            <ul>
+                {% for k, v in resultado.hortaliza.parametros.items() %}
+                <li><b>{{ k|capitalize }}:</b> {{ v }}</li>
+                {% endfor %}
+            </ul>
+            <ul>
+                {% for r in resultado.hortaliza.recomendaciones %}
+                <li>{{ r }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% if resultado.combinacion %}
+        <div class="section">
+            <h4>🤝 Recomendaciones para la combinación:</h4>
+            <ul>
+                {% for rec in resultado.combinacion %}
+                <li>{{ rec }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% else %}
+        <p style="color: #b45309;">No hay recomendaciones registradas para esta combinación específica.</p>
+        {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

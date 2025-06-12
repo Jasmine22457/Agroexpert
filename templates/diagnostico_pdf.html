@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Diagnóstico de Plagas y Enfermedades</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: #222;
+            background: #fff;
+            margin: 0; padding: 2em;
+            font-size: 15px;
+        }
+        .box {
+            border: 2px solid #3bb300;
+            background: #f7fbf7;
+            border-radius: 12px;
+            padding: 2em;
+            margin-bottom: 2em;
+        }
+        h1, h2 {
+            color: #187730;
+        }
+        hr {
+            border: none;
+            border-top: 2px solid #95e17c;
+            margin: 1em 0 2em;
+        }
+        .section-title {
+            color: #187730;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: .7em;
+        }
+        .sugerencias {
+            color: #c18800;
+        }
+        .quimicos {
+            margin-top: 1em;
+        }
+        ul { padding-left: 1.2em; }
+        li { margin-bottom: .4em; }
+        b { color: #1b6a22; }
+        .restric { font-size: 13px; color: #333; font-style: italic; }
+    </style>
+</head>
+<body>
+    <h2>Diagnóstico de Plagas y Enfermedades</h2>
+    <hr>
+    
+    <div class="box">
+        {% if diagnosticos %}
+            {% for d in diagnosticos %}
+                <div class="mb-4">
+                    <div><b>Plaga/Enfermedad:</b> {{ d.plaga }}</div>
+                    <div><b>Coincidencia:</b> {{ d.coincidencia }}</div>
+                    <div><b>Síntomas coincidentes:</b> {{ d.sintomas_coincidentes|join(', ') }}</div>
+                    <div><b>Estrategia:</b> {{ d.estrategia }}</div>
+                    <div><b>Tratamientos recomendados:</b>
+                        <ul>
+                            {% for t in d.tratamientos %}
+                                <li>
+                                    <b>Producto:</b> {{ t.producto }} ({{ t.clase }}) |
+                                    <b>Dosis:</b> {{ t.dosis }}<br>
+                                    <span class="restric">{{ t.restricciones }}</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        {% elif sugerencias %}
+            <h3 class="section-title sugerencias">No se identificó la plaga/enfermedad</h3>
+            <div>Sugerencias más comunes para este cultivo:</div>
+            <ul>
+                {% for s in sugerencias %}
+                    <li>{{ s }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        {% if quimicos %}
+            <div class="quimicos">
+                <h3 class="section-title">Productos químicos recomendados</h3>
+                <ul>
+                    {% for q in quimicos %}
+                        <li>
+                            <b>Producto:</b> {{ q.producto }} |
+                            <b>Clase:</b> {{ q.clase }} |
+                            <b>Dosis:</b> {{ q.dosis }}
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>

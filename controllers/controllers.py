@@ -11,6 +11,9 @@ from email.mime.multipart import MIMEMultipart
 import secrets
 import string
 from weasyprint import HTML
+from flask import request, render_template, send_file, Blueprint
+from io import BytesIO
+from weasyprint import HTML
 
 
 
@@ -271,7 +274,8 @@ def diagnostico():
         sugerencias=sugerencias,
         quimicos=quimicos,
         cultivos=cultivos,
-        sintomas_lista=sintomas_lista
+        sintomas_lista=sintomas_lista,
+         username=session.get('username', 'Usuario')
     )
 
 @main_blueprint.route('/get_variedades/<cultivo>')
@@ -328,3 +332,38 @@ def generar_pdf_fertilizante():
         print("ERROR AL GENERAR PDF:", e)
         return jsonify({'error': str(e)}), 500
 
+
+
+@main_blueprint.route('/diagnostico/pdf', methods=['POST'])
+def diagnostico_pdf():
+    data = request.get_json()
+    html = render_template(
+        'diagnostico_pdf.html',
+        diagnosticos=data.get('diagnosticos', []),
+        sugerencias=data.get('sugerencias', []),
+        quimicos=data.get('quimicos', [])
+    )
+    pdf = BytesIO()
+    HTML(string=html).write_pdf(pdf)
+    pdf.seek(0)
+    return send_file(
+        pdf,
+        mimetype='application/pdf',
+        as_attachment=True,
+        download_name='diagnostico_plagas.pdf'
+    )
+
+
+@main_blueprint.route('/acuaponia/pdf', methods=['POST'])
+def acuaponia_pdf():
+    data = request.get_json()
+    resultado = data.get('resultado')
+    # Renderiza el HTML del PDF
+    html = render_template('acuaponia_pdf.html', resultado=resultado)
+    # Genera el PDF en memoria
+    pdf = HTML(string=html).write_pdf()
+    # Envía el PDF como descarga
+    return send_file(BytesIO(pdf),
+                     download_name='acuaponia_recomendacion.pdf',
+                     as_attachment=True,
+                     mimetype='application/pdf')

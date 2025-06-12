@@ -3,113 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <title>Diagnóstico de Plagas y Enfermedades</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <style>
-        .sintoma-checkbox {
-            margin-right: 10px;
-            margin-bottom: 6px;
+        html, body { height: 100%; font-family: 'Segoe UI', sans-serif; }
+        .hero-bg {
+            background-image: url("{{ url_for('static', filename='img/hortaliza2.jpg') }}");
+            background-size: cover;
+            background-position: center;
         }
-        #sintomas-checkboxes {
-            margin-bottom: 15px;
-            margin-top: 6px;
+        .result-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            border: 1.5px solid rgba(255, 255, 255, 0.18);
         }
-        label.sintoma-label {
-            display: block;
-            cursor: pointer;
+        .hidden { display: none !important; }
+        @media print {
+            body * { visibility: hidden !important; }
+            #resultadoPDF, #resultadoPDF * {
+                visibility: visible !important;
+            }
+            #resultadoPDF {
+                position: absolute !important;
+                left: 0 !important; top: 0 !important;
+                width: 100vw !important;
+                background: white !important;
+                color: #222 !important;
+                box-shadow: none !important;
+            }
+            .noprint { display: none !important; }
         }
     </style>
 </head>
-<body>
-    <h2>Diagnóstico de Plagas y Enfermedades</h2>
-    <form method="POST" action="{{ url_for('main.diagnostico') }}">
-        <label for="cultivo">Cultivo:</label>
-        <select id="cultivo" name="cultivo" required>
-            <option value="">-- Seleccione --</option>
-            {% for c in cultivos %}
-            <option value="{{ c }}">{{ c|capitalize }}</option>
-            {% endfor %}
-        </select>
-        <br><br>
+<body class="hero-bg text-white relative min-h-screen">
+    <div class="absolute inset-0 bg-black bg-opacity-70 z-0 noprint"></div>
 
-        <label>Síntomas:</label>
-        <div id="sintomas-checkboxes">
-            {% for s in sintomas_lista %}
-                <label class="sintoma-label">
-                    <input type="checkbox" class="sintoma-checkbox" name="sintomas" value="{{ s }}">
-                    {{ s|capitalize }}
+    <nav class="noprint relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-5 backdrop-blur-lg shadow-md rounded-b-3xl">
+        <h1 class="text-3xl font-bold text-green-200 drop-shadow">
+            <span class="inline-block mr-2 animate-bounce">🦠</span>Diagnóstico de Plagas y Enfermedades | {{ username }}
+        </h1>
+        <button id="logoutBtn"
+            class="px-4 py-2 text-white font-semibold rounded-xl transition bg-gradient-to-tr from-green-400 to-emerald-700 hover:from-emerald-600 hover:to-green-400 shadow-lg"
+            aria-label="Cerrar sesión">
+            🔒 Cerrar sesión
+        </button>
+        
+    </nav>
+
+    <main class="relative z-10 px-6 py-12">
+        <section class="max-w-3xl mx-auto bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 result-card text-white shadow-xl">
+
+            <!-- FORMULARIO -->
+            <form method="POST" action="{{ url_for('main.diagnostico') }}" class="grid gap-5 noprint" id="formDiagnostico" {% if diagnosticos or sugerencias %}style="display:none;"{% endif %}>
+                <label class="block">
+                    <span class="text-green-200">Cultivo:</span>
+                    <select id="cultivo" name="cultivo" required class="w-full p-2 rounded bg-green-900 bg-opacity-60 text-white">
+                        <option value="">-- Seleccione --</option>
+                        {% for c in cultivos %}
+                            <option value="{{ c }}">{{ c|capitalize }}</option>
+                        {% endfor %}
+                    </select>
                 </label>
-            {% endfor %}
-        </div>
-        <button type="submit" style="margin-top: 12px;">Diagnosticar</button>
-    </form>
+                <label class="block">
+                    <span class="text-green-200">Síntomas:</span>
+                    <div id="sintomas-checkboxes" class="flex flex-wrap gap-2 mt-1"></div>
+                </label>
+                <button type="submit" id="diagnosticarBtn" class="mt-4 px-4 py-2 bg-green-500 hover:bg-green-600 text-white font-semibold rounded transition w-full">Diagnosticar</button>
+            </form>
 
-    <hr>
-    {% if diagnosticos %}
-    <h3>Resultados del Diagnóstico</h3>
-    {% for d in diagnosticos %}
-    <div style="border:1px solid #ccc; margin-bottom:16px; padding:10px;">
-        <strong>Plaga/Enfermedad:</strong> {{ d.plaga }}<br>
-        <strong>Coincidencia:</strong> {{ d.coincidencia }}<br>
-        <strong>Síntomas coincidentes:</strong> {{ d.sintomas_coincidentes|join(', ') }}<br>
-        <strong>Estrategia:</strong> {{ d.estrategia }}<br>
-        <strong>Tratamientos recomendados:</strong>
-        <ul>
-            {% for t in d.tratamientos %}
-            <li>
-                <b>Producto:</b> {{ t.producto }} ({{ t.clase }}) |
-                <b>Dosis:</b> {{ t.dosis }}<br>
-                <i>{{ t.restricciones }}</i>
-            </li>
-            {% endfor %}
-        </ul>
-    </div>
-    {% endfor %}
-    {% elif sugerencias %}
-    <h3>No se identificó la plaga/enfermedad</h3>
-    <b>Sugerencias más comunes para este cultivo:</b>
-    <ul>
-        {% for s in sugerencias %}
-        <li>{{ s }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+            <!-- SOLO RESULTADO -->
+            <div id="resultadoPDF" class="{% if not diagnosticos and not sugerencias %}hidden{% endif %} bg-white rounded-lg p-8 border-2 border-green-200 text-green-900 shadow mx-auto mt-8">
+                <h2 class="text-2xl font-bold text-green-800 mb-2">Diagnóstico de Plagas y Enfermedades</h2>
+                <hr class="mb-4 border-green-300">
+                {% if diagnosticos %}
+                    {% for d in diagnosticos %}
+                    <div class="mb-6">
+                        <div class="mb-2">
+                            <b class="text-green-700">Plaga/Enfermedad:</b> {{ d.plaga }}
+                        </div>
+                        <div class="mb-2">
+                            <b class="text-green-700">Coincidencia:</b> {{ d.coincidencia }}
+                        </div>
+                        <div class="mb-2">
+                            <b class="text-green-700">Síntomas coincidentes:</b> {{ d.sintomas_coincidentes|join(', ') }}
+                        </div>
+                        <div class="mb-2">
+                            <b class="text-green-700">Estrategia:</b> {{ d.estrategia }}
+                        </div>
+                        <div class="mb-2">
+                            <b class="text-green-700">Tratamientos recomendados:</b>
+                            <ul class="ml-4">
+                                {% for t in d.tratamientos %}
+                                    <li>
+                                        <b>Producto:</b> {{ t.producto }} ({{ t.clase }}) | 
+                                        <b>Dosis:</b> {{ t.dosis }}<br>
+                                        <span class="italic text-green-800">{{ t.restricciones }}</span>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% elif sugerencias %}
+                    <h3 class="text-lg font-bold text-yellow-700 mb-2">No se identificó la plaga/enfermedad</h3>
+                    <div class="mb-2">Sugerencias más comunes para este cultivo:</div>
+                    <ul class="list-disc ml-6">
+                        {% for s in sugerencias %}
+                            <li>{{ s }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+                {% if quimicos %}
+                    <div class="mt-6">
+                        <h3 class="text-lg font-bold text-green-800 mb-2">Productos químicos recomendados</h3>
+                        <ul class="list-disc ml-6">
+                            {% for q in quimicos %}
+                                <li>
+                                    <b>Producto:</b> {{ q.producto }} |
+                                    <b>Clase:</b> {{ q.clase }} |
+                                    <b>Dosis:</b> {{ q.dosis }}
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
 
-    {% if quimicos %}
-    <h3>Productos químicos recomendados</h3>
-    <ul>
-        {% for q in quimicos %}
-        <li>
-            <b>Producto:</b> {{ q.producto }} |
-            <b>Clase:</b> {{ q.clase }} |
-            <b>Dosis:</b> {{ q.dosis }}
-        </li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+            <!-- BOTONES -->
+            <div class="mt-8 flex gap-4 justify-end noprint" id="accionesResultados" {% if not diagnosticos and not sugerencias %}style="display:none;"{% endif %}>
+                <button id="limpiarBtn" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded shadow transition">
+                    Limpiar resultado
+                </button>
+                <button id="pdfBtn" class="px-4 py-2 bg-green-700 hover:bg-green-900 text-white font-semibold rounded shadow transition">
+                    Imprimir/Descargar PDF
+                </button>
+            </div>
+             <div class="mt-6">
+                <a href="/home" class="text-green-300 underline hover:text-green-400 transition">← Volver al inicio</a>
+            </div>
+        </section>
+    </main>
 
     <script>
-        $(function () {
-            $('#cultivo').change(function () {
-                let cultivo = $(this).val();
-                let $sintomasDiv = $('#sintomas-checkboxes');
-                $sintomasDiv.empty();
-                if (!cultivo) return;
-                $.getJSON('/sintomas/' + cultivo, function (data) {
-                    if (data.sintomas.length === 0) {
-                        $sintomasDiv.append('<em>No hay síntomas registrados para este cultivo.</em>');
-                    }
-                    for (let sintoma of data.sintomas) {
-                        let checkbox = $('<input type="checkbox" class="sintoma-checkbox">')
-                            .attr('name', 'sintomas')
-                            .attr('value', sintoma);
-                        let label = $('<label class="sintoma-label"></label>')
-                            .append(checkbox)
-                            .append(' ' + sintoma.charAt(0).toUpperCase() + sintoma.slice(1));
-                        $sintomasDiv.append(label);
-                    }
-                });
+    $(function () {
+        // Carga dinámica de síntomas según cultivo
+        $('#cultivo').change(function () {
+            let cultivo = $(this).val();
+            let $sintomasDiv = $('#sintomas-checkboxes');
+            $sintomasDiv.empty();
+            if (!cultivo) return;
+            $.getJSON('/sintomas/' + cultivo, function (data) {
+                if (data.sintomas.length === 0) {
+                    $sintomasDiv.append('<em class="text-red-400">No hay síntomas registrados para este cultivo.</em>');
+                }
+                for (let sintoma of data.sintomas) {
+                    let checkbox = $('<input type="checkbox" class="accent-green-500 mr-2">')
+                        .attr('name', 'sintomas')
+                        .attr('value', sintoma);
+                    let label = $('<label class="flex items-center bg-green-900 bg-opacity-40 px-3 py-1 rounded-lg shadow text-green-100 cursor-pointer hover:bg-green-800 transition"></label>')
+                        .append(checkbox)
+                        .append(' ' + sintoma.charAt(0).toUpperCase() + sintoma.slice(1));
+                    $sintomasDiv.append(label);
+                }
             });
         });
-    </script>
+
+        // Botón limpiar: muestra formulario, oculta resultados
+        $('#limpiarBtn').on('click', function () {
+            $('#resultadoPDF').addClass('hidden');
+            $('#accionesResultados').hide();
+            $('#formDiagnostico').show()[0].reset();
+            $('#sintomas-checkboxes').empty();
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        });
+
+        // Descargar PDF automáticamente del backend
+        $('#pdfBtn').on('click', function () {
+            // Puedes agregar parámetros si lo necesitas
+            fetch('/diagnostico/pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    diagnosticos: {{ diagnosticos|tojson|safe }},
+                    sugerencias: {{ sugerencias|tojson|safe }},
+                    quimicos: {{ quimicos|tojson|safe }}
+                })
+            })
+            .then(response => {
+                if (response.ok) return response.blob();
+                throw new Error('No se pudo generar el PDF');
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'diagnostico_plagas.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(err => {
+                alert('Error al generar el PDF: ' + err);
+            });
+        });
+    });
+</script>
+
 </body>
 </html>

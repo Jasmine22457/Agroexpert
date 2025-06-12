@@ -3,76 +3,193 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
     <title>Acuaponía Inteligente</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        html, body {
+            height: 100%;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .hero-bg {
+            background-image: url("{{ url_for('static', filename='img/hortaliza2.jpg') }}");
+            background-size: cover;
+            background-position: center;
+        }
+        .result-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .hidden { display: none !important; }
+        @media print {
+            body * { visibility: hidden !important; }
+            #resultadoPDF, #resultadoPDF * {
+                visibility: visible !important;
+            }
+            #resultadoPDF {
+                position: absolute !important;
+                left: 0 !important; top: 0 !important;
+                width: 100vw !important;
+                background: white !important;
+                color: #183e28 !important;
+                box-shadow: none !important;
+            }
+            .noprint { display: none !important; }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-br from-blue-900 to-green-800 min-h-screen text-white">
-    <nav class="flex justify-between items-center px-6 py-5 bg-white bg-opacity-10 shadow-lg rounded-b-2xl">
-        <h1 class="text-3xl font-bold text-green-200">🌊 Acuaponía | Hola, {{ username }}!</h1>
-        <button onclick="window.location.href='/logout'" class="px-4 py-2 bg-emerald-700 rounded-xl font-semibold">Cerrar sesión</button>
+<body class="hero-bg text-white relative min-h-screen">
+
+    <div class="absolute inset-0 bg-black bg-opacity-70 z-0 noprint"></div>
+    
+    <nav class="noprint relative z-10 flex justify-between items-center px-6 py-5 bg-white bg-opacity-5 backdrop-blur-lg shadow-md rounded-b-3xl">
+        <h1 class="text-3xl font-bold text-green-200 drop-shadow">
+            <span class="inline-block mr-2 animate-bounce">🌊</span> Acuaponía | {{ username }}
+        </h1>
+        <button id="logoutBtn"
+            class="px-4 py-2 text-white font-semibold rounded-xl transition bg-gradient-to-tr from-green-400 to-emerald-700 hover:from-emerald-600 hover:to-green-400 shadow-lg"
+            aria-label="Cerrar sesión">
+            🔒 Cerrar sesión
+        </button>
     </nav>
-    <main class="max-w-3xl mx-auto mt-12 p-6 bg-white bg-opacity-10 rounded-2xl shadow-lg">
-        <h2 class="text-2xl mb-6 font-bold text-center">Combinaciones recomendadas de peces y hortalizas</h2>
-        <form method="post" class="grid md:grid-cols-2 gap-6 mb-8">
-            <div>
-                <label class="block text-green-100 mb-2">Pez</label>
-                <select name="pez" required class="w-full p-2 rounded bg-green-900 bg-opacity-60">
-                    <option value="" disabled selected>Selecciona un pez</option>
-                    {% for p in opciones.peces %}
-                    <option value="{{ p }}" {% if pez==p %}selected{% endif %}>{{ p|capitalize }}</option>
-                    {% endfor %}
-                </select>
+    
+    <main class="relative z-10 px-6 py-12">
+        <section class="max-w-3xl mx-auto bg-white bg-opacity-10 backdrop-blur-xl rounded-3xl p-6 result-card text-white shadow-xl">
+
+            <h2 class="text-2xl mb-6 font-bold text-center text-green-100">Combinaciones recomendadas de peces y hortalizas</h2>
+            <!-- Formulario -->
+            <form id="formAcuaponia" method="post" class="grid md:grid-cols-2 gap-6 mb-8 noprint" {% if resultado %}style="display:none;"{% endif %}>
+                <div>
+                    <label class="block text-green-100 mb-2">Pez</label>
+                    <select name="pez" required class="w-full p-2 rounded bg-green-900 bg-opacity-60 text-white">
+                        <option value="" disabled selected>Selecciona un pez</option>
+                        {% for p in opciones.peces %}
+                        <option value="{{ p }}" {% if pez==p %}selected{% endif %}>{{ p|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label class="block text-green-100 mb-2">Hortaliza</label>
+                    <select name="hortaliza" required class="w-full p-2 rounded bg-green-900 bg-opacity-60 text-white">
+                        <option value="" disabled selected>Selecciona una hortaliza</option>
+                        {% for h in opciones.hortalizas %}
+                        <option value="{{ h }}" {% if hortaliza==h %}selected{% endif %}>{{ h|capitalize }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button id="consultarBtn" type="submit" class="col-span-2 mt-2 bg-emerald-600 hover:bg-emerald-800 rounded py-2 font-bold transition">
+                    Consultar combinación
+                </button>
+            </form>
+
+            <!-- RESULTADO SOLO PDF/IMPRIMIR -->
+            <div id="resultadoPDF" class="{% if not resultado %}hidden{% endif %} bg-white rounded-lg p-8 border-2 border-green-200 text-green-900 shadow mx-auto mt-8">
+                {% if resultado %}
+                <h3 class="text-2xl font-semibold mb-6 text-emerald-800">Resultado de Acuaponía</h3>
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold mb-2">🐟 Parámetros del Pez: {{ resultado.pez.tipo|capitalize }}</h4>
+                    <ul class="mb-4">
+                        {% for k,v in resultado.pez.parametros.items() %}
+                        <li><b>{{ k|capitalize }}:</b> {{ v }}</li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="mb-4 list-disc pl-6 text-green-800">
+                        {% for r in resultado.pez.recomendaciones %}
+                        <li>{{ r }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div class="mb-6">
+                    <h4 class="text-lg font-bold mb-2">🥬 Parámetros de la Hortaliza: {{ resultado.hortaliza.tipo|capitalize }}</h4>
+                    <ul class="mb-4">
+                        {% for k,v in resultado.hortaliza.parametros.items() %}
+                        <li><b>{{ k|capitalize }}:</b> {{ v }}</li>
+                        {% endfor %}
+                    </ul>
+                    <ul class="mb-4 list-disc pl-6 text-green-800">
+                        {% for r in resultado.hortaliza.recomendaciones %}
+                        <li>{{ r }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% if resultado.combinacion %}
+                <div>
+                    <h4 class="text-lg font-bold mb-2">🤝 Recomendaciones para la combinación:</h4>
+                    <ul class="list-disc pl-6 text-green-900">
+                        {% for rec in resultado.combinacion %}
+                        <li>{{ rec }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% else %}
+                <p class="text-yellow-700 mt-4">No hay recomendaciones registradas para esta combinación específica.</p>
+                {% endif %}
+                {% endif %}
             </div>
-            <div>
-                <label class="block text-green-100 mb-2">Hortaliza</label>
-                <select name="hortaliza" required class="w-full p-2 rounded bg-green-900 bg-opacity-60">
-                    <option value="" disabled selected>Selecciona una hortaliza</option>
-                    {% for h in opciones.hortalizas %}
-                    <option value="{{ h }}" {% if hortaliza==h %}selected{% endif %}>{{ h|capitalize }}</option>
-                    {% endfor %}
-                </select>
+
+            <!-- ACCIONES -->
+            <div class="mt-8 flex gap-4 justify-end noprint" id="accionesResultados" {% if not resultado %}style="display:none;"{% endif %}>
+                <button id="limpiarBtn" class="px-4 py-2 bg-gray-500 hover:bg-gray-600 text-white font-semibold rounded shadow transition">
+                    Limpiar resultado
+                </button>
+                <button id="pdfBtn" class="px-4 py-2 bg-green-700 hover:bg-green-900 text-white font-semibold rounded shadow transition">
+                    Imprimir/Descargar PDF
+                </button>
             </div>
-            <button type="submit" class="col-span-2 mt-2 bg-emerald-600 hover:bg-emerald-800 rounded py-2 font-bold">Consultar combinación</button>
-        </form>
-        {% if resultado %}
-        <div class="bg-green-900 bg-opacity-30 rounded-lg p-6 shadow">
-            <h3 class="text-xl font-semibold mb-2">🐟 Parámetros del Pez: {{ resultado.pez.tipo|capitalize }}</h3>
-            <ul class="mb-4">
-                {% for k,v in resultado.pez.parametros.items() %}
-                <li><b>{{ k|capitalize }}:</b> {{ v }}</li>
-                {% endfor %}
-            </ul>
-            <ul class="mb-4 list-disc pl-6 text-green-200">
-                {% for r in resultado.pez.recomendaciones %}
-                <li>{{ r }}</li>
-                {% endfor %}
-            </ul>
-            <h3 class="text-xl font-semibold mb-2 mt-6">🥬 Parámetros de la Hortaliza: {{ resultado.hortaliza.tipo|capitalize }}</h3>
-            <ul class="mb-4">
-                {% for k,v in resultado.hortaliza.parametros.items() %}
-                <li><b>{{ k|capitalize }}:</b> {{ v }}</li>
-                {% endfor %}
-            </ul>
-            <ul class="mb-4 list-disc pl-6 text-green-200">
-                {% for r in resultado.hortaliza.recomendaciones %}
-                <li>{{ r }}</li>
-                {% endfor %}
-            </ul>
-            {% if resultado.combinacion %}
-            <h3 class="text-lg font-semibold mt-6 mb-2">🤝 Recomendaciones para la combinación:</h3>
-            <ul class="list-disc pl-6 text-green-300">
-                {% for rec in resultado.combinacion %}
-                <li>{{ rec }}</li>
-                {% endfor %}
-            </ul>
-            {% else %}
-            <p class="text-yellow-200 mt-4">No hay recomendaciones registradas para esta combinación específica.</p>
-            {% endif %}
-        </div>
-        {% endif %}
-        <div class="mt-6 text-center">
-            <a href="/home" class="text-green-200 underline hover:text-green-400">← Volver al inicio</a>
-        </div>
+
+            <div class="mt-6 text-center noprint">
+                <a href="/home" class="text-green-200 underline hover:text-green-400">← Volver al inicio</a>
+            </div>
+        </section>
     </main>
+
+    <script>
+    $(function () {
+        // Botón limpiar: muestra formulario, oculta resultado y acciones
+        $('#limpiarBtn').on('click', function () {
+            $('#resultadoPDF').addClass('hidden');
+            $('#accionesResultados').hide();
+            $('#formAcuaponia').show()[0].reset();
+            $('html, body').animate({ scrollTop: 0 }, 'slow');
+        });
+
+        // Descargar PDF automáticamente del backend
+        $('#pdfBtn').on('click', function () {
+            fetch('/acuaponia/pdf', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    resultado: {{ resultado|tojson|safe }}
+                })
+            })
+            .then(response => {
+                if (response.ok) return response.blob();
+                throw new Error('No se pudo generar el PDF');
+            })
+            .then(blob => {
+                const url = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'acuaponia_recomendacion.pdf';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                window.URL.revokeObjectURL(url);
+            })
+            .catch(err => {
+                alert('Error al generar el PDF: ' + err);
+            });
+        });
+
+        // Cerrar sesión (opcional)
+        $('#logoutBtn').on('click', function () {
+            window.location.href = '/logout';
+        });
+    });
+    </script>
 </body>
 </html>
